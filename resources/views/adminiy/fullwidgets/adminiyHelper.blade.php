@@ -317,6 +317,7 @@ var bindyTableDelete = ()=>{
         document.getElementById(_idd).addEventListener('click',function(){
           var id = this.getAttribute('data-record')
           var table = this.getAttribute('data-table');
+          var _col = this.getAttribute('data-col');
           var _mainNode = this;
           swal({
               title: "Are you sure?",
@@ -330,7 +331,7 @@ var bindyTableDelete = ()=>{
             }).then((delRecord)=>{
                 if(delRecord){
                 	_mainNode.parentElement.parentElement.classList='animated fadeOutRight';
-                    return ajaxify('','DELETE',base_url('adminiy/delete/ylisting/'+table+'/'+id));
+                    return ajaxify('col='+_col,'POST',base_url('adminiy/delete/ylisting/'+table+'/'+id));
                 }
             })
             .then((willDelete) => {

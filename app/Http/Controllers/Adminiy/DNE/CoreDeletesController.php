@@ -14,7 +14,8 @@ class CoreDeletesController extends IndexController
         View()->share('v',config('app.vadminiy'));
     }
     public function ylistingDelete($table,$id){
-        DB::DELETE("DELETE from {$table} where id = {$id}");
+        $col = isset($_POST['col'])?$_POST['col']:'id';
+        DB::DELETE("DELETE from {$table} where {$col} = {$id}");
         $table_name_length = strlen($table);
         $images = imagetable::where('ref_id',$id)->whereRaw("LEFT(table_name,{$table_name_length})='".$table."'")->get();
         if($images){

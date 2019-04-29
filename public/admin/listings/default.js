@@ -129,6 +129,7 @@ _default will set a default value for new records
         "order by" : "id desc",
         // "group by" : "table.id",
     },ydebugger);
+    //ytabled.uniqueCol = 'table_id';
     ytabled.autoCallbacksonBuild.push('turnOnDblClickCopyyTable');
 window.addEventListener('ytable_beforeRow', function (e) {
     //console.log(e.detail);

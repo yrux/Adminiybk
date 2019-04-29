@@ -66,6 +66,7 @@ class ListingController extends IndexController
     /*Create listing end*/
     /*fetching list data start*/
     public function ytable(yTableRequest $request){
+        $uniqueCol = $request->uniqueCol;
         $validated = $request->validated();
         if($validated){
             /*Defining Variables*/
@@ -89,7 +90,7 @@ class ListingController extends IndexController
                 }
                 /*Setting Columns End*/
                 /*Building Query*/
-                $countingCols = 'select count('.$table.'.id) as aggregate';
+                $countingCols = 'select count('.$table.'.'.$uniqueCol.') as aggregate';
                 $fetchingCols = 'select '.$colsarray->implode(',');
                 $query=' from '.$table;
                 /*Join builder*/

@@ -94,7 +94,8 @@ class ytable {
     var cols = this.colnames;
     var page = this.page;
     var clauses = this.allClause;
-    var searchQuery = this.q
+    var searchQuery = this.q;
+    var uniqueCol = this.uniqueCol;
     this.ytdebuger(['parameters 1:table,2:joins,3:limit,4:columns',tbl,joins,limit,cols]);
     var _ytdata = {
       "table":tbl,
@@ -103,7 +104,8 @@ class ytable {
       "joins":joins,
       "limit":limit,
       "page":page,
-      "q":searchQuery
+      "q":searchQuery,
+      "uniqueCol":uniqueCol
     }
     this.ytdebuger(_ytdata);
     this.buildtableheader();
@@ -234,7 +236,7 @@ class ytable {
         tr+='<td>';
         this.additionalCols.forEach((additionalColumns)=>{
           if(additionalColumns=='delete'){
-            tr+='<button data-toggle="tooltip" data-deleteytable="true" id="delete_'+dd[this.uniqueCol]+'" data-record="'+dd[this.uniqueCol]+'" data-table="'+this.table+'" data-col="id" class="btn btn-outline-danger btn--icon" data-placement="top" title="Delete Record"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button>';
+            tr+='<button data-toggle="tooltip" data-deleteytable="true" id="delete_'+dd[this.uniqueCol]+'" data-record="'+dd[this.uniqueCol]+'" data-table="'+this.table+'" data-col="'+this.uniqueCol+'" class="btn btn-outline-danger btn--icon" data-placement="top" title="Delete Record"><i class="zmdi zmdi-delete zmdi-hc-fw"></i></button>';
           } else if(additionalColumns=='editFast'){
             tr+='<button data-toggle="tooltip" data-fasteditytable="true" data-col="id" data-record="'+dd[this.uniqueCol]+'" data-table="'+this.table+'"  id="edit_fast_'+dd[this.uniqueCol]+'" class="btn btn-outline-success btn--icon" data-placement="top" title="Edit Record"><i class="zmdi zmdi-edit zmdi-hc-fw"></i></button>';
           }else if(additionalColumns=='viewFast'){

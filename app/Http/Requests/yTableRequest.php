@@ -32,6 +32,7 @@ class yTableRequest extends FormRequest
         return [
             'table' => 'required',
             'cols'=>'required',
+            'uniqueCol'=>'required'
         ];
     }
 }
