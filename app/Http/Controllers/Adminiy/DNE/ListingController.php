@@ -11,6 +11,7 @@ use App\Model\imagetable;
 use File;
 use App\Http\Requests\yTableRequest;
 use Storage;
+use Schema;
 
 class ListingController extends IndexController
 {
@@ -30,7 +31,10 @@ class ListingController extends IndexController
         }
         $path=public_path('admin/listings/'.$jsfile.'.js');
         $tablename = explode('-', $jsfile);
-        $jsFileRoute = 'admin/listings/'.$jsfile.'.js'; 
+        $jsFileRoute = 'admin/listings/'.$jsfile.'.js';
+        if(!Schema::hasTable($tablename[0])){
+            return redirect()->route('adminiy.panel')->with('notify_message','Table does not exist');
+        }
         if(!File::exists($path)){
             ytables::where('js_file',$jsFileRoute)->delete();
             $ytables = new ytables;

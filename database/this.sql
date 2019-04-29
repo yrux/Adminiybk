@@ -275,7 +275,7 @@ CREATE TABLE `ytables` (
   `model_name` varchar(255) DEFAULT NULL COMMENT 'laravel model name, Fill this when you have different model name and different table name',
   `table_name` varchar(255) DEFAULT NULL COMMENT 'database table name',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 /*Data for the table `ytables` */
 
