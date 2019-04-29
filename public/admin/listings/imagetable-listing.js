@@ -143,10 +143,12 @@ window.addEventListener('ytable_afterRow', function (e) {
 });
 window.addEventListener('fastCrudSuccess', function (e) {
     if(e.detail.status){
-        ytabled.destroy();
-        $('#ytable-FastCRUD').modal('hide');
-        notify('1','File Updated, Redirecting you to Panel');
-        window.location = base_url('adminiy');
+        if(default_type=='1'){
+            ytabled.destroy();
+            $('#ytable-FastCRUD').modal('hide');
+            notify('1','File Updated, Redirecting you to Panel');
+            window.location = base_url('adminiy');
+        }
     }
     /*Fires after you update/create record and that record is successfully updated/created 
     e.datail = response

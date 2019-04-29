@@ -18,14 +18,16 @@ class IndexController extends Controller
     }
     public function index()
     {
-        $banners = Helper::fireQuery("select banner_management.*
-            ,img_1.img_path as img_1_img
-            ,img_2.img_path as img_2_img from banner_management 
-            left join imagetable as img_1 on img_1.ref_id = banner_management.id and img_1.type=1 and img_1.table_name='banner_management'
-            left join imagetable as img_2 on img_2.ref_id = banner_management.id and img_2.type=1 and img_2.table_name='banner_management_thumb'
-            where banner_management.is_active=1 and banner_management.is_deleted=0");
-        $deals = Helper::getImageWithData('products','id','',"is_active=1 and is_deleted=0 and product_type='deals'",0,'order by id asc');
-        return view('welcome')->with('title',Helper::returnFlag(123))->with(compact('banners','deals'))->with('homeMenu',true);
+        // $banners = Helper::fireQuery("select banner_management.*
+        //     ,img_1.img_path as img_1_img
+        //     ,img_2.img_path as img_2_img from banner_management 
+        //     left join imagetable as img_1 on img_1.ref_id = banner_management.id and img_1.type=1 and img_1.table_name='banner_management'
+        //     left join imagetable as img_2 on img_2.ref_id = banner_management.id and img_2.type=1 and img_2.table_name='banner_management_thumb'
+        //     where banner_management.is_active=1 and banner_management.is_deleted=0");
+        // $deals = Helper::getImageWithData('products','id','',"is_active=1 and is_deleted=0 and product_type='deals'",0,'order by id asc');
+        return view('welcome')->with('title',Helper::returnFlag(123))
+        ->with('homeMenu',true);
+        //->with(compact('banners','deals'))
     }
     public function contactus()
     {

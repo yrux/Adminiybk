@@ -10,6 +10,7 @@ use App\Model\ytables;
 use App\Model\imagetable;
 use File;
 use App\Http\Requests\yTableRequest;
+use Storage;
 
 class ListingController extends IndexController
 {

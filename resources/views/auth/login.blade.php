@@ -1,8 +1,6 @@
-@extends('layouts.app')
-
+@extends('layouts.main')
 @section('content')
 <div class="login">
-
 <!-- Login -->
 <div class="login__block active" id="l-login">
 <div class="login__block__header">
