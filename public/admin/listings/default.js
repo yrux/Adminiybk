@@ -166,6 +166,9 @@ window.addEventListener('fastCrudFailed', function (e) {
 window.addEventListener('fastCrudFromRendered', function (e) {
     /*Fires after your popup form has been rendered , if you want any function to work or event to bind
     on any input, from here you can do that...
+    e.detail have the data of a row you've selected to edit, 
+    if you've created a new record e.detail will be undefined
+    console.log(e.detail);
     */
 });
 })();

@@ -149,7 +149,7 @@ var fastCRUDForm = (ytableObj,_selectedData=undefined,viewmode='create/edit')=>{
 	    dateFormat: "H:i",
 	    inline: true,
 	});
-	var evt = new CustomEvent('fastCrudFromRendered', {detail:''});
+	var evt = new CustomEvent('fastCrudFromRendered', {detail:_selectedData});
     window.dispatchEvent(evt);
 }
 var createinput = ({type,name,column,_default},value='')=>{
