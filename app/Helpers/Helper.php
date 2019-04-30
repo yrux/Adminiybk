@@ -259,6 +259,19 @@ public static function getPaginator($pageLimit=20){
       return '';
       }
     }
+    public static function returnFlagT($id,$col='flag_value'){
+    if($id){
+      $data =  self::returnRow("m_flag","flag_type='".$id."'");
+      if($data){
+      return $data->$col;
+      }
+      else {
+      return '';
+      }
+    }else {
+      return '';
+      }
+    }
     public static function returnRow($table,$where){
         $whereCond = $where=='' ? '' : ' WHERE '.$where;
         $data = collect(\DB::select("SELECT * FROM ".$table." ".$whereCond))->first();
