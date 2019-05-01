@@ -9,7 +9,7 @@ class customer
         if(Auth::check()){
             return $next($request);
         } else {
-            return redirect()->route('customer.login')->with('notify_error','You need to login before accessing Customer Dashboard');
+            return redirect()->route('login')->with('notify_error','You need to login before accessing Customer Dashboard');
         }
     }
     public function terminate($request, $response){
