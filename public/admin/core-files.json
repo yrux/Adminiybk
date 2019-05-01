@@ -20,6 +20,6 @@
 		"app/Http/Controllers/Adminiy/DNE/MultiImageController.php",
 		"app/Http/Controllers/Adminiy/DNE/PanelUpdateController.php",
 		"app/Http/Controllers/Adminiy/DNE/SearchController.php",
-		"app/Helpers/Helper.php",
+		"app/Helpers/Helper.php"
 	]
 }
