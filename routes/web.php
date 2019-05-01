@@ -66,6 +66,11 @@ Route::group(['middleware' => ['adminiy'],'prefix'=>'adminiy','namespace'=>'Admi
 	/*Get Any Flag against type end*/
 	Route::get('/search', 'DNE\SearchController@index')->name('adminiy.mainsearch');
 	Route::get('/logout', 'LoginController@logout')->name('adminiy.logout');
+	/*Adminiy Panel Updater*/
+	Route::get('update-panel','DNE\PanelUpdateController@updatePanel')->name('adminiy.updatePanel');
+	Route::get('update-core-Json','DNE\PanelUpdateController@updateCoreJson')->name('adminiy.updateCoreJson');
+	Route::get('check-git-version','DNE\PanelUpdateController@checkGitV')->name('adminiy.checkGitV');
+	/*Adminiy Panel Updater End*/
 });
 
 Route::group(['middleware' => ['customer'],'prefix'=>'customer','namespace'=>'Customer'], function () {
