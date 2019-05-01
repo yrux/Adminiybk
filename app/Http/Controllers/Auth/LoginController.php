@@ -40,5 +40,6 @@ class LoginController extends Controller
         $favicon=Helper::OneColData('imagetable','img_path',"table_name='favicon' and ref_id=0 and is_active_img='1'");
         View()->share('favicon',$favicon);
         View()->share('config',$this->getConfig());
+        View()->share('title',"Login");
     }
 }
