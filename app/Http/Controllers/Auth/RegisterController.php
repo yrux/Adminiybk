@@ -69,7 +69,11 @@ class RegisterController extends Controller
                 ->withInput()
                 ->withErrors($validator, 'register');
         }
-
+        if($this->create($_POST)){
+            return redirect()->route('home')->with('notify_success',"Registration successfull");
+        } else {
+            return redirect()->route('home')->with('notify_error',"Some error occured");
+        }
         // rest of the register method code here...
     }
     /**

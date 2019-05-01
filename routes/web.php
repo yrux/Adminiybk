@@ -67,3 +67,11 @@ Route::group(['middleware' => ['adminiy'],'prefix'=>'adminiy','namespace'=>'Admi
 	Route::get('/search', 'DNE\SearchController@index')->name('adminiy.mainsearch');
 	Route::get('/logout', 'LoginController@logout')->name('adminiy.logout');
 });
+
+Route::group(['middleware' => ['customer'],'prefix'=>'customer','namespace'=>'Customer'], function () {
+	Route::get('/',function(){
+		return redirect('/customer/panel');
+	});
+	Route::get('/panel', 'IndexController@index')->name('customer.panel');
+	Route::get('/logout', 'IndexController@logout')->name('customer.logout');
+});
