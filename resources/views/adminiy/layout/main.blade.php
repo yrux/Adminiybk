@@ -55,6 +55,7 @@
 <!-- App functions and actions -->
 <script src="{{asset('admin/js/app.min.js')}}"></script>
 <script src="{{asset('js/public.js')}}"></script>
+<script src="{{asset('js/ycommon.js')}}"></script>
 @include('adminiy.layout.errorhandler')
 @yield('js')
 </body>

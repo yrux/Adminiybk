@@ -1,32 +1,25 @@
 {
-     'version':'1.1' , 
-     'files':[
-  		/*CORE JS*/
-      	'public/js/public.js',
-		'public/js/ycommon.js',
-		'public/js/plugin/ytable.js',
-		'public/js/admin/listings/default.js',
-		'public/js/admin/js/content-management.js',
-		'public/js/admin/css/app.min.css',
-		'public/js/admin/demo/css/demo.css',
-		/*CORE END*/
-		/*CORE Adminiy Views*/
-		'resources/views/adminiy/core/editor.blade.php',
-		'resources/views/adminiy/fullwidgets/adminiyHelper.blade.php',
-		'resources/views/adminiy/adminiy-listing.blade.php',
-		'resources/views/adminiy/search/index.blade.php',
-		/*CORE Adminiy Views End*/
-		/*CORE Adminiy Controller*/
-		'app/Http/Controllers/Adminiy/DNE/ConfigController.php',
-		'app/Http/Controllers/Adminiy/DNE/CoreDeletesController.php',
-		'app/Http/Controllers/Adminiy/DNE/fastCRUDController.php',
-		'app/Http/Controllers/Adminiy/DNE/FrontEndEditorController.php',
-		'app/Http/Controllers/Adminiy/DNE/ListingController.php',
-		'app/Http/Controllers/Adminiy/DNE/MultiImageController.php',
-		'app/Http/Controllers/Adminiy/DNE/PanelUpdateController.php',
-		'app/Http/Controllers/Adminiy/DNE/SearchController.php',
-		/*CORE Adminiy Controller End*/
-		/*Helper*/
-		'app/Helpers/Helper.php',
-		/*Helper End*/
-    ]}
+ "version":"1.1" , 
+ "files":[
+	  	"public/js/public.js",
+		"public/js/ycommon.js",
+		"public/js/plugin/ytable.js",
+		"public/js/admin/listings/default.js",
+		"public/js/admin/js/content-management.js",
+		"public/js/admin/css/app.min.css",
+		"public/js/admin/demo/css/demo.css",
+		"resources/views/adminiy/core/editor.blade.php",
+		"resources/views/adminiy/fullwidgets/adminiyHelper.blade.php",
+		"resources/views/adminiy/adminiy-listing.blade.php",
+		"resources/views/adminiy/search/index.blade.php",
+		"app/Http/Controllers/Adminiy/DNE/ConfigController.php",
+		"app/Http/Controllers/Adminiy/DNE/CoreDeletesController.php",
+		"app/Http/Controllers/Adminiy/DNE/fastCRUDController.php",
+		"app/Http/Controllers/Adminiy/DNE/FrontEndEditorController.php",
+		"app/Http/Controllers/Adminiy/DNE/ListingController.php",
+		"app/Http/Controllers/Adminiy/DNE/MultiImageController.php",
+		"app/Http/Controllers/Adminiy/DNE/PanelUpdateController.php",
+		"app/Http/Controllers/Adminiy/DNE/SearchController.php",
+		"app/Helpers/Helper.php",
+	]
+}

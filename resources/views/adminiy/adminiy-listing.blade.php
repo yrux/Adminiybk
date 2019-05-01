@@ -88,7 +88,6 @@
 <!--Sorting Modal-->
 @section('js')
 @include('adminiy.fullwidgets.adminiyHelper')
-<script src="{{asset('js/ycommon.js')}}"></script>
 <script src="{{asset('js/plugin/ytable.js')}}"></script>
 <script src="{{asset($listingData->js_file)}}"></script>
 <script src="{{asset('admin/vendors/autosize/autosize.min.js')}}"></script>
