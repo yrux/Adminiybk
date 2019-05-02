@@ -14,7 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Dummy Project'),
-    'vadminiy'=>'1.2',
+    'vadminiy'=>'1.3',
 
     /*
     |--------------------------------------------------------------------------
@@ -225,7 +225,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Helper' => App\Helpers\Helper::class,
-
+        'ImageUtil' => App\Helpers\ImageUtil::class,
     ],
 
 ];

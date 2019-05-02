@@ -1,5 +1,5 @@
 {
- "version":"1.2" , 
+ "version":"1.3" , 
  "files":[
 	  	"public/js/public.js",
 		"public/js/ycommon.js",
@@ -21,6 +21,8 @@
 		"app/Http/Controllers/Adminiy/DNE/PanelUpdateController.php",
 		"app/Http/Controllers/Adminiy/DNE/SearchController.php",
 		"app/Helpers/Helper.php",
+		"app/Helpers/Resize.php",
+		"app/Helpers/ImageUtil.php",
 		"config/app.php"
 	]
 }
