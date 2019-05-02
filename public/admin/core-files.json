@@ -4,7 +4,7 @@
 	  	"public/js/public.js",
 		"public/js/ycommon.js",
 		"public/js/plugin/ytable.js",
-		"public/js/admin/listings/default.js",
+		"public/admin/listings/default.js",
 		"public/js/admin/js/content-management.js",
 		"public/js/admin/css/app.min.css",
 		"public/js/admin/demo/css/demo.css",
