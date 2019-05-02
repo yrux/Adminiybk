@@ -71,9 +71,9 @@
                                 <small class="">Email</small>
                                 <span class="app-shortcuts__helper bg-teal"></span>
                             </a>
-                            <a class="col-4 app-shortcuts__item" href="#">
-                                <i class="zmdi zmdi-trending-up"></i>
-                                <small class="">Reports</small>
+                            <a class="col-4 app-shortcuts__item" href="javascript:void(0)" onclick="_adminiyUpgradeCheck()">
+                                <i class="zmdi zmdi-github zmdi-hc-fw"></i>
+                                <small class="">Upgrade Adminiy {{$v}}</small>
                                 <span class="app-shortcuts__helper bg-blue-grey"></span>
                             </a>
                             <a class="col-4 app-shortcuts__item" href="#">

@@ -15,6 +15,11 @@
         @yield('hcss')
         <link rel="stylesheet" href="{{asset('admin/css/app.min.css')}}">
         @yield('css')
+        <style type="text/css">
+            div.adminiy-upgradeProgress {
+                margin-bottom: 10px;
+            }
+        </style>
 </head>
 <body data-ma-theme="{{Helper::returnFlag(499)}}">
 <main>
@@ -39,6 +44,10 @@
     <div class="card">
         @yield('content-header')
         <div class="card-body">
+        <h4 class="adminiy-upgradeProgress adminiy-upgrade-status" style="display: none;"></h4>
+        <div class="progress progress-bar-striped adminiy-upgradeProgress" style="display: none;">
+            <div class="progress-bar bg-warning adminiy-upgrade-bar" role="progressbar" style="width: 0%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
             @yield('content')
         </div>
     </div>
@@ -52,11 +61,13 @@
 <script src="{{asset('admin/vendors/jquery-scrollbar/jquery.scrollbar.min.js')}}"></script>
 <script src="{{asset('admin/vendors/jquery-scrollLock/jquery-scrollLock.min.js')}}"></script>
 <script src="{{asset('admin/vendors/bootstrap-notify/bootstrap-notify.min.js')}}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!-- App functions and actions -->
 <script src="{{asset('admin/js/app.min.js')}}"></script>
 <script src="{{asset('js/public.js')}}"></script>
 <script src="{{asset('js/ycommon.js')}}"></script>
 @include('adminiy.layout.errorhandler')
+@include('adminiy.fullwidgets.updater')
 @yield('js')
 </body>
 </html>

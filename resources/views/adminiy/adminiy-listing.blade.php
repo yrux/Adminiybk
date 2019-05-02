@@ -92,7 +92,6 @@
 <script src="{{asset($listingData->js_file)}}"></script>
 <script src="{{asset('admin/vendors/autosize/autosize.min.js')}}"></script>
 <script src="{{asset('admin/vendors/nouislider/nouislider.min.js')}}"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{{asset('admin/vendors/flatpickr/flatpickr.min.js')}}"></script>
 <script src="{{asset('admin/vendors/ckeditor/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
