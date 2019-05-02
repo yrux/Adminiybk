@@ -39,7 +39,6 @@
 @section('content')
 
 @section('js')
-<script src="{{asset('js/ycommon.js')}}"></script>
 <script src="{{asset('admin/vendors/lightgallery/js/lightgallery-all.min.js')}}"></script>
 <script type="text/javascript">
 (function() {

@@ -6,6 +6,8 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>{{isset($title)?$title:adminiy()->name.' Adminiy '.$v}}</title>
+        <link rel="icon" type="image/png" href="{{asset(isset($favicon)?$favicon:'')}}">
+        <link rel="icon" type="image/jpg" href="{{asset(isset($favicon)?$favicon:'')}}">
         <!-- Vendor styles -->
         <link rel="stylesheet" href="{{asset('admin/vendors/material-design-iconic-font/css/material-design-iconic-font.min.css')}}">
         <link rel="stylesheet" href="{{asset('admin/vendors/animate.css/animate.min.css')}}">

@@ -53,6 +53,9 @@ async function loolUpdatedFiles(_files){
 		$('.adminiy-upgrade-bar').attr('style','width:'+(q+1)*perFilePercent+'%');
 		await _adminiyFetchandUpdateFile(_file);
 	}
+	ajaxify('','GET','{{asset('admin/core-files.json')}}').then(q=>{
+		notify('0',"Panel updated to "+q.version)
+	});
 	/*_files.forEach(async function(_file,_index){
 		$('.adminiy-upgrade-status').html('').html('Fetching : '+_file);
 		$('.adminiy-upgrade-bar').attr('style','width:'+(_index+1)*perFilePercent+'%');
