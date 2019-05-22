@@ -15,8 +15,14 @@ class ImageUtil extends Helper
       if($img_path){
         $imageName = $imageId.'-'.$height.'x'.$width;
         $extension = strtolower(strrchr($img_path, '.'));
-        $image_returning = 'Uploads/resized/'.$imageName.$extension;
+        $image_returning = 'Uploads/resized/'.$imageId.'/'.$imageName.$extension;
         $fileCheck = public_path($image_returning);
+        /*creating directory according to id if not exist*/
+        $image_returning_id_directory = public_path('Uploads/resized/'.$imageId);
+        if(!file_exists($image_returning_id_directory)){
+          mkdir($image_returning_id_directory);
+        }
+        /*creating directory according to id  if not exist end*/
         if(!file_exists($fileCheck)){
           /*Generating Image*/
           $image = public_path($img_path);

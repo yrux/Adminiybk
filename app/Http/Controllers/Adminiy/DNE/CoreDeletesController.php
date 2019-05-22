@@ -25,7 +25,7 @@ class CoreDeletesController extends IndexController
         DB::DELETE("DELETE from {$table} where {$col} = {$id}");
         /*after delete*/
         try{
-            app("App\Http\Controllers\Adminiy\FCCallbackControllers\\".$table."Controller")->afterDelete($table,$id,$col));
+            app("App\Http\Controllers\Adminiy\FCCallbackControllers\\".$table."Controller")->afterDelete($table,$id,$col);
         }catch(\Exception $ex){
             //dd($ex);
         }
@@ -52,5 +52,8 @@ class CoreDeletesController extends IndexController
             }
         }
         echo json_encode(array('status'=>'0','data'=>'Unable to delete Image'));
+    }
+    public function deleteResizedImage($id){
+        return Storage::disk('public')->deleteDirectory('Uploads/resized/'.$id);
     }
 }

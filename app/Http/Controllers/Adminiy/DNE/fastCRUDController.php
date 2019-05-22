@@ -70,6 +70,11 @@ class fastCRUDController extends IndexController
                     if(!$imagetable){
                         $imagetable = new imagetable;
                     } else {
+                        try {
+                            app("App\Http\Controllers\Adminiy\DNE\CoreDeletesController")->deleteResizedImage($imagetable->id);
+                        }catch(\Exception $ex){
+                            //dd($ex);
+                        }
                         $directories = explode('/', $imagetable->img_path);
                         //echo $directories[(count($directories)-2)];
                         Storage::disk('public')->delete($imagetable->img_path);

@@ -21,6 +21,11 @@ class MultiImageController extends IndexController
         $model_name = 'App\Model\\'.$strOrModel;
         if(!empty($request->input($request->unique_column))){
             $model_name_test = $model_name::find($request->input($request->unique_column));
+            try {
+                app("App\Http\Controllers\Adminiy\DNE\CoreDeletesController")->deleteResizedImage($model_name_test->id);
+            } catch(\Exception $ex){
+                //dd($ex);
+            }
             $message = 'Data Updated';
         } else {
             $model_name_test = new $model_name;
