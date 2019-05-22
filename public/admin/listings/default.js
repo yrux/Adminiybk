@@ -48,6 +48,23 @@ _default will set a default value for new records
         //     type:'dropdown',
         //     typeData:TYPEDATA,
         //     hiddenInList:true,
+        //     callback:'setDropdownValue'
+        // }
+        // ,{
+        //     column:'field_type',
+        //     name:'Type',
+        //     type:'select2',
+        //     typeData:TYPEDATA,
+        //     hiddenInList:true,
+        //     callback:'setDropdownValue'
+        // }
+        // ,{
+        //     column:'field_type',
+        //     name:'Type',
+        //     type:'multiselect',
+        //     typeData:TYPEDATA,
+        //     hiddenInList:true,
+        //     callback:'setMultiselectValue'
         // }
         /*if you want to show this field in view and it's a file path then use this*/
         // ,{

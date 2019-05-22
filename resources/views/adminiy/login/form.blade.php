@@ -43,3 +43,12 @@
 </div>
 </div>
 @endsection
+@section('js')
+<script type="text/javascript">
+    (()=>{
+        $(".form-group--float").each(function() {
+            0 == !$(this).find(".form-control").val().length && $(this).find(".form-control").addClass("form-control--active")
+        });
+    })()
+</script>
+@endsection

@@ -1,6 +1,5 @@
 @extends('adminiy.layout.main')
 @section('content-header')
-
 @endsection
 @section('content')
 <div class="ytable-iconoverlay"></div>
@@ -11,7 +10,7 @@
     @endif
     </h4>
 @endif
-<button data-toggle="tooltip" data-placement="left" title="Sort Records" class="btn btn-info btn--action ytable-sortrecord"><i class="zmdi zmdi-sort-asc zmdi-hc-fw"></i></button>
+<button style="display:none" data-toggle="tooltip" data-placement="left" title="Sort Records" class="btn btn-info btn--action ytable-sortrecord"><i class="zmdi zmdi-sort-asc zmdi-hc-fw"></i></button>
 @if($listingData->page_message!="")
 <h6 class="card-subtitle"><?php print $listingData->page_message; ?></h6>
 @endif
@@ -94,6 +93,7 @@
 <script src="{{asset('admin/vendors/nouislider/nouislider.min.js')}}"></script>
 <script src="{{asset('admin/vendors/flatpickr/flatpickr.min.js')}}"></script>
 <script src="{{asset('admin/vendors/ckeditor/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
+<script src="{{asset('admin/vendors/select2/js/select2.full.min.js')}}"></script>
 <script type="text/javascript">
 var _defaultLimit = window.localStorage.getItem('ytable-default-limit')?window.localStorage.getItem('ytable-default-limit'):10;
 var sorted=false;
@@ -145,6 +145,7 @@ var sorted=false;
 @section('hcss')
 <link rel="stylesheet" href="{{asset('admin/vendors/nouislider/nouislider.min.css')}}">
 <link rel="stylesheet" href="{{asset('admin/vendors/flatpickr/flatpickr.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin/vendors/select2/css/select2.min.css')}}">
 @endsection
 @section('css')
 <style type="text/css">
@@ -234,5 +235,9 @@ width:334px;
 .table-dark td{
     vertical-align: inherit;
 }
+._refunded {
+    background: #ff000040;
+}
+
 </style>
 @endsection

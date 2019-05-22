@@ -33,6 +33,13 @@ class fastCRUDController extends IndexController
         $anyImage = array();
         $inputs = $request->except(['modelName','ytable_table','unique_column']);
         $statusInputs = array('is_active','is_deleted','is_featured');
+        /*before save*/
+        try{
+            $inputs = app("App\Http\Controllers\Adminiy\FCCallbackControllers\\".$table."Controller")->beforeInsert($inputs);
+        }catch(\Exception $ex){
+            
+        }
+        /*before save end*/
         foreach($inputs as $inputK=>$inputV){
             if(!in_array($inputK, $statusInputs)){
                 if(Str::endsWith($inputK,'_image')){
@@ -76,6 +83,13 @@ class fastCRUDController extends IndexController
                     $imagetable->save();
                 }
             }
+            /*after save*/
+            try{
+                app("App\Http\Controllers\Adminiy\FCCallbackControllers\\".$table."Controller")->afterInsert($model_name_test);
+            }catch(\Exception $ex){
+                //dd($ex);
+            }
+            /*after save end*/
             echo json_encode(array('status'=>'1','data'=>$message));
         }
     }

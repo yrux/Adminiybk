@@ -15,7 +15,21 @@ class CoreDeletesController extends IndexController
     }
     public function ylistingDelete($table,$id){
         $col = isset($_POST['col'])?$_POST['col']:'id';
+        /*before delete*/
+        try{
+            app("App\Http\Controllers\Adminiy\FCCallbackControllers\\".$table."Controller")->beforeDelete($table,$id,$col);
+        }catch(\Exception $ex){
+            //dd($ex);
+        }
+        /*before delete end*/
         DB::DELETE("DELETE from {$table} where {$col} = {$id}");
+        /*after delete*/
+        try{
+            app("App\Http\Controllers\Adminiy\FCCallbackControllers\\".$table."Controller")->afterDelete($table,$id,$col));
+        }catch(\Exception $ex){
+            //dd($ex);
+        }
+        /*after delete end*/
         $table_name_length = strlen($table);
         $images = imagetable::where('ref_id',$id)->whereRaw("LEFT(table_name,{$table_name_length})='".$table."'")->get();
         if($images){

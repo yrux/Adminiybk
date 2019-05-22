@@ -11,6 +11,34 @@ function is_active(_node){
 	}
 	return '<div class="toggle-switch toggle-switch--{{$theme}}"><input type="checkbox" class="toggle-switch__checkbox"  data-toggle="tooltip" title="No" disabled><i class="toggle-switch__helper"></i></div>';
 }
+function setDropdownValue(_node){
+	_val = '';
+	_node[3].colnames.forEach(j=>{
+		if(j.column==_node[0]){
+			if(j.typeData[_node[2]]){
+				_val=j.typeData[_node[2]];
+			}
+		}
+	})
+	return _val;
+}
+function setMultiselectValue(_node){
+	try {
+		_val = '';
+		_node[3].colnames.forEach(j=>{
+			if(j.column==_node[0]){
+				_node[2].split(',').forEach(qq=>{
+					if(j.typeData[qq]){
+						_val+=j.typeData[qq]+', ';
+					}
+				});
+			}
+		})
+		return _val;
+	} catch(ex){
+		console.log(ex);
+	}
+}
 function show_image_ytable(_node){
 	var value = _node[2];
 	var _src = img_url(value);
@@ -59,8 +87,14 @@ var ytableCrudCBFail = (res)=>{
 			if(res.errors){
 				for(j in res.errors){
 					$('[name="'+j+'"]').addClass('is-invalid');
-					$('[name="'+j+'"]').next().next('.invalid-tooltip').html('').html(res.errors[j].join('</br>'));
-					console.log(res.errors[j].join('</br>'));
+					if($('[name="'+j+'"]').next('.invalid-tooltip').length>0){
+						/*for select input errors*/
+						$('[name="'+j+'"]').next('.invalid-tooltip').html('').html(res.errors[j].join('</br>'));
+					} else {
+						/*for normal input errors*/
+						$('[name="'+j+'"]').next().next('.invalid-tooltip').html('').html(res.errors[j].join('</br>'));
+					}
+					//console.log(res.errors[j].join('</br>'));
 					//console.log(j,res.errors[j]);
 				}
 			}
@@ -97,6 +131,12 @@ var fastCRUDForm = (ytableObj,_selectedData=undefined,viewmode='create/edit')=>{
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createCheckbox(formColumns[i],val);
 		} else if(formColumns[i].type=='dropdown'){
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createDropDown(formColumns[i],val);
+		}
+		else if(formColumns[i].type=='select2'){
+			document.getElementById('ytable-FastCRUDFields').innerHTML+=createSelect2(formColumns[i],val);
+		}
+		else if(formColumns[i].type=='multiselect'){
+			document.getElementById('ytable-FastCRUDFields').innerHTML+=createMultiselect(formColumns[i],val);
 		}
 		else if(formColumns[i].type=='textarea'||formColumns[i].type=='wyswig'){
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createTextArea(formColumns[i],val);
@@ -149,6 +189,12 @@ var fastCRUDForm = (ytableObj,_selectedData=undefined,viewmode='create/edit')=>{
 	    dateFormat: "H:i",
 	    inline: true,
 	});
+	var a = $(".select2-parent")[0] ? $(".select2-parent") : $("body");
+	$("select.select2").select2({
+		dropdownAutoWidth: !0,
+		width: "100%",
+		dropdownParent: a
+	})
 	var evt = new CustomEvent('fastCrudFromRendered', {detail:_selectedData});
     window.dispatchEvent(evt);
 }
@@ -250,6 +296,60 @@ var createDropDown = ({name,column,typeData},value='')=>{
 	<div class="select">\
 	<label>'+name+'</label>\
 	<select class="form-control" name="'+column+'">\
+		'+_opt+'\
+	</select>\
+	<div class="invalid-tooltip"></div>\
+	<i class="form-group__bar"></i>\
+	</div>\
+	</div>';
+}
+var createSelect2 = ({name,column,typeData},value='')=>{
+	var _opt='';
+	if(value==''){
+		_opt = '<option value="" selected="">Please Select</option>';
+	} else {
+		_opt = '<option value="" >Please Select</option>';
+	}
+	for(y in typeData){
+		var _selectedOrNot = y==value?' selected=""':'';
+		_opt+='<option '+_selectedOrNot+' value="'+y+'">'+typeData[y]+'</option>';
+	}
+	return '<div class="form-group">\
+	<div class="select select2-parent">\
+	<label>'+name+'</label>\
+	<select class="form-control select2" name="'+column+'">\
+		'+_opt+'\
+	</select>\
+	<div class="invalid-tooltip"></div>\
+	<i class="form-group__bar"></i>\
+	</div>\
+	</div>';
+}
+var createMultiselect = ({name,column,typeData},value='')=>{
+	var _opt='';
+	if(value==''){
+		//_opt = '<option value="" selected="">Please Select</option>';
+	} else {
+		//_opt = '<option value="" >Please Select</option>';
+	}
+	for(y in typeData){
+		if(value){
+			var _selectedOrNot='';
+			value.split(',').forEach(e=>{
+				if(y==e){
+					_selectedOrNot = y==e?' selected=""':'';
+				}
+			});
+			_opt+='<option '+_selectedOrNot+' value="'+y+'">'+typeData[y]+'</option>';
+		} else {
+			var _selectedOrNot = y==value?' selected=""':'';
+			_opt+='<option '+_selectedOrNot+' value="'+y+'">'+typeData[y]+'</option>';
+		}
+	}
+	return '<div class="form-group">\
+	<div class="select select2-parent">\
+	<label>'+name+'</label>\
+	<select class="form-control select2" name="'+column+'[]" multiple>\
 		'+_opt+'\
 	</select>\
 	<div class="invalid-tooltip"></div>\
@@ -451,6 +551,11 @@ async function getFlagDropdown(flag,obj){
 }
 async function getAjaxTable(table,key,value,_where=''){
 	return ajaxifyN({table:table,key:key,value:value,where:_where},'POST',base_url('adminiy/getDropdown')).then(q=>{
+		return q;
+	})
+}
+async function getOwnDropdown(_uri,method,_param){
+	return ajaxifyN(_param,method,base_url(_uri)).then(q=>{
 		return q;
 	})
 }
