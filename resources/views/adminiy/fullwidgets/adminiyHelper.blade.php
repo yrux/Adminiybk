@@ -129,7 +129,11 @@ var fastCRUDForm = (ytableObj,_selectedData=undefined,viewmode='create/edit')=>{
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createinput(formColumns[i],val);
 		} else if(formColumns[i].type=='checkbox'){
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createCheckbox(formColumns[i],val);
-		} else if(formColumns[i].type=='dropdown'){
+		} 
+		else if(formColumns[i].type=='color'){
+			document.getElementById('ytable-FastCRUDFields').innerHTML+=createcolor(formColumns[i],val);
+		}
+		else if(formColumns[i].type=='dropdown'){
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createDropDown(formColumns[i],val);
 		}
 		else if(formColumns[i].type=='select2'){
@@ -195,6 +199,15 @@ var fastCRUDForm = (ytableObj,_selectedData=undefined,viewmode='create/edit')=>{
 		width: "100%",
 		dropdownParent: a
 	})
+	$(".color-picker").each(function() {
+		var a = $(this).data("horizontal") || !1;
+		$(this).colorpicker({
+			horizontal: a
+		})
+	}); 
+	$("body").on("change", ".color-picker", function() {
+            $(this).next(".color-picker__preview").css("backgroundColor", $(this).val())
+	});
 	var evt = new CustomEvent('fastCrudFromRendered', {detail:_selectedData});
     window.dispatchEvent(evt);
 }
@@ -219,6 +232,24 @@ var createinput = ({type,name,column,_default},value='')=>{
 		}
 	}
 	return '<input type="'+type+'" name="'+column+'" class="form-control" value="'+value+'" />';
+}
+var createcolor = ({type,name,column,_default},value='')=>{
+	if(type!='hidden'){
+		if(value==''){
+			if(_default){
+				value=_default;
+			}
+		}
+		return '<div class="input-group">\
+			<div class="input-group-prepend">\
+				<span class="input-group-text"><i class="zmdi zmdi-palette"></i> '+name+'</span>\
+			</div>\
+			<input type="text" class="form-control color-picker"  autocomplete="password" name="'+column+'" value="'+value+'"">\
+			<i class="color-picker__preview" style="background-color: #03A9F4"></i>\
+			<div class="invalid-tooltip"></div>\
+			<i class="form-group__bar"></i>\
+		</div>';
+	}
 }
 var createslug = ({type,name,column,slugof,_default},value='')=>{
 	if(type!='hidden'){
@@ -282,19 +313,20 @@ var createCheckbox = ({name,column,_default},value='0')=>{
     </div>';
 }
 var createDropDown = ({name,column,typeData},value='')=>{
+	var _keys = Object.keys(typeData);
 	var _opt='';
 	if(value==''){
-		_opt = '<option value="" selected="">Please Select</option>';
+		_opt = '<option value="" selected="">Please Select '+name+'</option>';
 	} else {
-		_opt = '<option value="" >Please Select</option>';
+		_opt = '<option value="" >Please Select '+name+'</option>';
 	}
-	for(y in typeData){
-		var _selectedOrNot = y==value?' selected=""':'';
-		_opt+='<option '+_selectedOrNot+' value="'+y+'">'+typeData[y]+'</option>';
-	}
+	_keys.sort().forEach(q=>{
+		var _selectedOrNot = q==value?' selected=""':'';
+		_opt+='<option '+_selectedOrNot+' value="'+q+'">'+typeData[q]+'</option>';
+	});
 	return '<div class="form-group">\
 	<div class="select">\
-	<label>'+name+'</label>\
+	<!--<label>'+name+'</label>-->\
 	<select class="form-control" name="'+column+'">\
 		'+_opt+'\
 	</select>\

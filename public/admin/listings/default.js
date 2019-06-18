@@ -66,6 +66,11 @@ _default will set a default value for new records
         //     hiddenInList:true,
         //     callback:'setMultiselectValue'
         // }
+        // ,{
+        //     column:'color_field_name',
+        //     name:'Color Picker',
+        //     type:'color',
+        // }
         /*if you want to show this field in view and it's a file path then use this*/
         // ,{
         //     column:'field_file',

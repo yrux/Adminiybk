@@ -94,6 +94,7 @@
 <script src="{{asset('admin/vendors/flatpickr/flatpickr.min.js')}}"></script>
 <script src="{{asset('admin/vendors/ckeditor/ckeditor/ckeditor.js')}}" type="text/javascript"></script>
 <script src="{{asset('admin/vendors/select2/js/select2.full.min.js')}}"></script>
+<script src="{{asset('admin/vendors/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
 <script type="text/javascript">
 var _defaultLimit = window.localStorage.getItem('ytable-default-limit')?window.localStorage.getItem('ytable-default-limit'):10;
 var sorted=false;
@@ -146,6 +147,7 @@ var sorted=false;
 <link rel="stylesheet" href="{{asset('admin/vendors/nouislider/nouislider.min.css')}}">
 <link rel="stylesheet" href="{{asset('admin/vendors/flatpickr/flatpickr.min.css')}}">
 <link rel="stylesheet" href="{{asset('admin/vendors/select2/css/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('admin/vendors/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css')}}">
 @endsection
 @section('css')
 <style type="text/css">
@@ -238,6 +240,8 @@ width:334px;
 ._refunded {
     background: #ff000040;
 }
-
+.colorpicker-alpha.colorpicker-visible, .colorpicker-hue.colorpicker-visible, .colorpicker-saturation.colorpicker-visible, .colorpicker-selectors.colorpicker-visible, .colorpicker.colorpicker-visible{
+    z-index:10000;
+}
 </style>
 @endsection

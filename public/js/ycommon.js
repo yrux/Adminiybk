@@ -168,7 +168,7 @@ function childFormSubmitAsync(ArrayofArrays,method,url,func,btnObj)
   var returnResult;
   $.ajax({
       type    : method,
-      data    : { ArrayofArrays: ArrayofArrays},
+      data    : ArrayofArrays,
       async:true,
       url     : url,
       beforeSend: function (request) {
@@ -178,8 +178,8 @@ function childFormSubmitAsync(ArrayofArrays,method,url,func,btnObj)
         func(result,btnObj);
       },
       error:function (error) {
-        showError('msg','Some Error Occured');
-        func('',btnObj);
+        try { showError('msg','Some Error Occured'); } catch(ex) { }
+        func(error.responseText,btnObj);
       }
       });
 }
