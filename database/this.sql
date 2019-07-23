@@ -1,6 +1,6 @@
 /*
 SQLyog Community v12.3.3 (32 bit)
-MySQL - 10.1.37-MariaDB : Database - adminiy
+MySQL - 10.1.30-MariaDB : Database - adminiy
 *********************************************************************
 */
 
@@ -9,6 +9,7 @@ MySQL - 10.1.37-MariaDB : Database - adminiy
 /*!40101 SET SQL_MODE=''*/;
 
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 /*Table structure for table `adminiy` */
@@ -74,7 +75,7 @@ CREATE TABLE `imagetable` (
 /*Data for the table `imagetable` */
 
 insert  into `imagetable`(`id`,`table_name`,`img_path`,`created_at`,`updated_at`,`ref_id`,`type`,`is_active_img`,`additional_attributes`,`img_href`) values 
-(1,'logo','Uploads/imagetable/c0643c4556720db91c8e2cb2cf354a23/r7UkLRp9aYjOhp6xMW0RR0eO9jG8nRLSOiEo4eoG.png','2019-04-29 23:58:30','2019-04-29 18:58:30',0,1,'1',NULL,NULL),
+(1,'logo','Uploads/imagetable/7afbe7dd3c34cc6b9ec8ac3a6e94ae96/sCtTHox8PjNT2hA2v6agIy34lvyyLsiijWzPgP0A.png','2019-07-23 17:51:33','2019-07-23 12:51:33',0,1,'1',NULL,NULL),
 (2,'favicon','Uploads/imagetable/13c0c92892833baaf750729782ab6104/WZvCOV9PH81W151eRfGCcexCG8T2oBOwF7dv2u53.png','2019-04-18 21:49:42','2019-04-18 16:49:42',0,1,'1',NULL,NULL);
 
 /*Table structure for table `inquiry` */
@@ -244,5 +245,6 @@ insert  into `ytables`(`id`,`js_file`,`page_heading`,`page_message`,`new_url`,`i
 (17,'admin/listings/m_flag-listing.js','Flag','','adminiy/crud/m_flag',0,'2019-04-19 06:51:33','2019-04-19 11:58:07','',1,'','m_flag');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
