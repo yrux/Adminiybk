@@ -225,7 +225,7 @@ function uploadImageInline(obj){
   $('#imageinlineheight').val($(obj).data('height'));
 }
 function UploadFile(id,obj){
-var path = $('#web_base_url').val()+'/member/imageUpload?isguest=true';
+var path = $('#web_base_url').val()+'/adminiy/imageUpload';
 data = new FormData();
 data.append('file', $('#'+id)[0].files[0]);
 data.append('id',obj);

@@ -38,6 +38,9 @@ Route::group(['middleware' => ['adminiy'],'prefix'=>'adminiy','namespace'=>'Admi
 	Route::post('/statusAjaxUpdate', 'DNE\FrontEndEditorController@statusAjaxUpdate');
 	Route::post('/updateFlagOnKey', 'DNE\FrontEndEditorController@updateFlagOnKey');
 	/*FRONT END EDITOR End*/
+	/*FRONT END IMAGE Upload*/
+	Route::post('/imageUpload', 'DNE\FrontEndEditorController@imageUpload');
+	/*FRONT END IMAGE Upload END*/
 	/*Get Any Flag against type*/
 	Route::post('/getFlag', function(){
 		$data = \collect(App\Model\m_flag::select('id','flag_value')->where('flag_type',$_POST['flag_type'])->where('is_active',1)->where('is_deleted',0)->get());

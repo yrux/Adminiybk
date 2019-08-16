@@ -28,6 +28,8 @@
       </div>
     </div>
   </div>
+
+<?php Helper::dynamicImages(asset(''),'images/logo.png',array("data-width"=>"280","data-height"=>"180","class"=>"img-responsive"),'WELCOME'); ?>
 </div>
 @include('extends.testwidget')
 @endsection

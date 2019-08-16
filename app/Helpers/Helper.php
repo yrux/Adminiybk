@@ -6,6 +6,7 @@ use Auth;
 use Session;
 use Cache;
 use \Datetime;
+use App\Helpers\ImageUtil;
 class Helper
 {
     public static function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
@@ -470,6 +471,8 @@ public static function getPaginator($pageLimit=20){
     if($imageRow->is_active_img=='1'){
       $default = $db;
       $hardUrl.='';
+      $hardUrl='';
+      $default=ImageUtil::gethref($imageRow->id,$styles['data-width'],$styles['data-height']);
     }
     else if($imageRow->is_active_img=='0' && is_adminiy()){
       if(adminiy()->is_active=='1'){
@@ -494,7 +497,7 @@ public static function getPaginator($pageLimit=20){
       return;
       }
     }
-      }
+      } else { $hardUrl.=''; }
       $imageUrl = $hardUrl.''.$default;
       $creating.='data-url="'.$imageUrl.'"';
       if(is_adminiy()){

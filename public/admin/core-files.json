@@ -1,5 +1,5 @@
 {
- "version":"1.3" , 
+ "version":"1.4" , 
  "files":[
 	  	"public/js/public.js",
 		"public/js/ycommon.js",
@@ -23,6 +23,7 @@
 		"app/Helpers/Helper.php",
 		"app/Helpers/Resize.php",
 		"app/Helpers/ImageUtil.php",
-		"config/app.php"
+		"config/app.php",
+		"routes/web.php",
 	]
 }

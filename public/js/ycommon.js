@@ -212,6 +212,9 @@ var CopyText = (text)=>{
   notify('2','Text Copied');
   _fk.remove();
 }
+var ReloadPage = ()=>{
+  location.reload();
+}
 (function() {
     recallajax();
 })();

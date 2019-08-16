@@ -6,6 +6,9 @@ use View;
 use App\Model\imagetable;
 use App\Model\m_flag;
 use DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use App\Helpers\ImageUtil;
 
 class FrontEndEditorController extends IndexController
 {
@@ -58,6 +61,36 @@ class FrontEndEditorController extends IndexController
                 DB::INSERT("INSERT INTO m_flag (flag_type,flag_value,flag_additionalText,flag_show_text,is_active,is_featured) values('".$key."','".$key."','$content','$attr','1','1')");
                 echo 'success';
             }
+        }
+    }
+    public function imageUpload(Request $request){
+        $data = explode("|",$_POST['id']);
+        if(!empty($_FILES)){
+            if(!empty($_FILES['file'])){
+                $_FILES['file']['img_href'] = $_POST['href'];
+            }
+        }
+        if($request->has('file')){
+            if(count($data)>3){
+                //$imageSavefooter = $this->imageUpload($_FILES,'file',$data[2],$data[1],1,true,$data[3],$data[4],1,true);
+                $imageSavefooter='';
+            } else {
+                $imagetable=imagetable::where('table_name',$data[0])->first();
+                if(!$imagetable){
+                    $imagetable = new imagetable;
+                } else {
+                    $imagetable = imagetable::find($imagetable->id);
+                }
+                $imagetable->table_name=$data[0];
+                $imagetable->ref_id=0;
+                $imagetable->type=1;
+                $imagetable->is_active_img=1;
+                $path = $request->file('file')->store('Uploads/imagetable/'.md5(Str::random(20)), 'public');
+                    $imagetable->img_path = $path;
+                    $imagetable->save();
+                $imageSavefooter=$imagetable->id;
+            }
+            echo ImageUtil::gethref($imageSavefooter,$data[1],$data[2]);
         }
     }
 }
