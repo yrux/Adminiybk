@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-<form method="POST" action="{{route('contactusSubmit')}}">
+<form class="CrudForm" id="inquiry_form" data-noinfo="true" data-customcallback="inquiry_success" data-customcallbackFail="inquiry_error" method="POST" action="{{route('contactusSubmit')}}">
 @csrf
 <div class="form-group">
   <div class="row">
@@ -54,5 +54,25 @@
 (()=>{
   /*in page css here*/
 })()
+function inquiry_error(res){
+  if(res){
+    if(isJSON(res)){
+      res = JSON.parse(res);
+      if(res.errors){
+        var _errors='';
+        for(j in res.errors){
+          _errors+=res.errors[j].join('</br>')+'</br>';
+        }
+        generateNotification('0',_errors);
+      }
+    }
+  }
+}
+function inquiry_success(_msg){
+    if(_msg.status){
+        generateNotification('1','Thank you! your message has been sent to admin.');
+    $('#inquiry_form')[0].reset();
+    }
+}
 </script>
 @endsection

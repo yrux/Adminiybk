@@ -10,7 +10,7 @@
     @endif
     </h4>
 @endif
-<button style="display:none" data-toggle="tooltip" data-placement="left" title="Sort Records" class="btn btn-info btn--action ytable-sortrecord"><i class="zmdi zmdi-sort-asc zmdi-hc-fw"></i></button>
+<button data-toggle="tooltip" data-placement="left" title="Sort Records" class="btn btn-info btn--action ytable-sortrecord"><i class="zmdi zmdi-sort-asc zmdi-hc-fw"></i></button>
 @if($listingData->page_message!="")
 <h6 class="card-subtitle"><?php print $listingData->page_message; ?></h6>
 @endif
@@ -97,7 +97,8 @@
 <script src="{{asset('admin/vendors/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
 <script type="text/javascript">
 var _defaultLimit = window.localStorage.getItem('ytable-default-limit')?window.localStorage.getItem('ytable-default-limit'):10;
-var sorted=false;
+var sorted_column;
+var sorted_column_type=' asc';
 (function() {
     @if($listingData->fast_crud=='1')
         enableFastCrud();
@@ -129,8 +130,9 @@ var sorted=false;
         });
         var _html = '';
         _filterdColumns.forEach(d=>{
-            _html+='<label class="btn '+(!sorted?'active':'')+'"><input type="radio" data-sortcol="'+d.column+'" name="'+d.column+'_sort" id="'+d.column+'_sort_id" autocomplete="off"> '+d.name+'</label>';
-            sorted=true;
+            var _cls=(sorted_column==d.column?' active':'');
+            _cls+=(sorted_column==d.column?' '+sorted_column_type:'');
+            _html+='<label onclick="sort_ytable_dynamic(this)" class="btn '+_cls+'"><i class="zmdi zmdi-sort-asc zmdi-hc-fw"></i><i class="zmdi zmdi-sort-desc zmdi-hc-fw"></i><input type="radio" data-sortcol="'+d.column+'" name="'+d.column+'_sort" id="'+d.column+'_sort_id" autocomplete="off"> '+d.name+'</label>';
         });
         document.getElementById('ytable-sortModal-body').innerHTML='<div class="btn-group btn-group-toggle" data-toggle="buttons">'+_html+'</div>';
     })
@@ -141,6 +143,20 @@ var sorted=false;
     // $('body').removeClass('ytableBlur');
    })
 })();
+function sort_ytable_dynamic(_r) {
+    if(_r.classList.contains('asc')){
+        _r.classList.remove('asc');
+        _r.classList.add('desc');
+        sorted_column_type='desc';
+    } else {
+        _r.classList.remove('desc');
+        _r.classList.add('asc');
+        sorted_column_type='asc';
+    }
+    sorted_column=_r.children[2].getAttribute('data-sortcol');
+    ytabled.allClause['order by']=sorted_column+' '+sorted_column_type;
+    ytabled.resetyTable();
+}
 </script>
 @endsection
 @section('hcss')
@@ -242,6 +258,15 @@ width:334px;
 }
 .colorpicker-alpha.colorpicker-visible, .colorpicker-hue.colorpicker-visible, .colorpicker-saturation.colorpicker-visible, .colorpicker-selectors.colorpicker-visible, .colorpicker.colorpicker-visible{
     z-index:10000;
+}
+#ytable-sortModal-body .btn > i {
+    display: none;
+}
+#ytable-sortModal-body .btn.active.asc > i.zmdi-sort-asc {
+    display: inline-block;
+}
+#ytable-sortModal-body .btn.active.desc > i.zmdi-sort-desc {
+    display: inline-block;
 }
 </style>
 @endsection

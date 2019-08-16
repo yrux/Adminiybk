@@ -42,6 +42,6 @@ class IndexController extends Controller
         $inquiry->inquiries_phone = $request->inquiries_phone;
         $inquiry->extra_content = $request->extra_content;
         $inquiry->save();
-        return redirect()->route('contactus')->with('notify_message','Inquiry Saved, We will contact you ASAP');
+        $this->echoSuccess("Inquiry Saved");
     }
 }

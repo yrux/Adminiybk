@@ -54,9 +54,9 @@ function buildImageCol(table_name){
 	return '<input type="file" />'
 }
 var shakeTable = ()=>{
-	document.getElementsByClassName('ytable')[0].classList.value = 'table table-dark mb-0 ytable animated';
+	//document.getElementsByClassName('ytable')[0].classList.value = 'table table-dark mb-0 ytable animated';
 	setTimeout(()=>{
-	document.getElementsByClassName('ytable')[0].classList.value = 'table table-dark mb-0 ytable animated shake';
+	//document.getElementsByClassName('ytable')[0].classList.value = 'table table-dark mb-0 ytable animated shake';
 	},100);
 }
 function ytableCrudCB(res){

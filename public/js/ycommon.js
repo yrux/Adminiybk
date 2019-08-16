@@ -141,7 +141,9 @@ function recallajax(){
          }
       },
       error:function (error) {
-        notify('0','Some Error Occured');
+        if(!_thisForm.attr('data-noinfo')){
+          notify('0','Some Error Occured');
+        }
         if(!_thisForm.data('nosubmit')){
           submitBtn.show();
         }
