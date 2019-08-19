@@ -3,13 +3,17 @@ $theme = Helper::returnFlag(499);
 ?>
 <script type="text/javascript">
 function is_active(_node){
+    var column = _node[0];
 	var value = _node[2];
+	var table = _node[3]._table;
+	var _uniqueCol=_node[3]._uniqueCol;
+	var _ref = _node[1][_uniqueCol];
 	if(value){
 		if(value=='1'){
-			return '<div class="toggle-switch toggle-switch--{{$theme}}"><input type="checkbox" class="toggle-switch__checkbox" data-toggle="tooltip" title="Yes" disabled checked=""><i class="toggle-switch__helper"></i></div>';
+			return '<div class="toggle-switch toggle-switch--{{$theme}}"><input type="checkbox" data-refcol="'+_uniqueCol+'" data-refid="'+_ref+'" data-table="'+table+'" data-column="'+column+'" class="toggle-switch__checkbox" data-toggle="tooltip" title="Yes" checked=""><i class="toggle-switch__helper"></i></div>';
 		}
 	}
-	return '<div class="toggle-switch toggle-switch--{{$theme}}"><input type="checkbox" class="toggle-switch__checkbox"  data-toggle="tooltip" title="No" disabled><i class="toggle-switch__helper"></i></div>';
+	return '<div class="toggle-switch toggle-switch--{{$theme}}"><input type="checkbox" data-refcol="'+_uniqueCol+'" data-refid="'+_ref+'"  data-table="'+table+'" data-column="'+column+'" class="toggle-switch__checkbox"  data-toggle="tooltip" title="No" ><i class="toggle-switch__helper"></i></div>';
 }
 function setDropdownValue(_node){
 	_val = '';
@@ -554,7 +558,28 @@ function turnOnDblClickCopyyTable(){
 				CopyText(this.innerHTML);
 			})
 		}
-	})
+	});
+	setting_checkbox_grid();
+}
+function setting_checkbox_grid(){
+    $('.toggle-switch__checkbox').click(function(){
+        var param = {
+            table : $(this).data('table'),
+            column:$(this).data('column'),
+            refcol:$(this).data('refcol'),
+            uid:$(this).data('refid'),
+        }
+	    if($(this).prop('checked')){
+	        /*on true*/
+	        param.val=$(this).prop('checked');
+	    } else {
+	        param.val=$(this).prop('checked');
+	        /*on false*/
+	    }
+	    ajaxifyN(param,'POST',base_url('adminiy/update-checkbox')).then(function(e){
+	        ytabled.resetyTable();
+	    });
+    })
 }
 var generateSlug = (inputname,obj)=>{
 	let _val = $(obj).val();
