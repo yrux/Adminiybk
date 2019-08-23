@@ -30,8 +30,8 @@ Route::group(['middleware' => ['adminiy'],'prefix'=>'adminiy','namespace'=>'Admi
 	Route::post('/config', 'DNE\ConfigController@configSave')->name('adminiy.configSave');
 	/*CONFIG CORE END*/
 	/*DELETING CORE*/
-	Route::post('/delete/ylisting/{table}/{id?}', 'DNE\CoreDeletesController@ylistingDelete')->name('adminiy.delete.ylisting');
 	Route::post('/delete/ylisting/image', 'DNE\CoreDeletesController@imageDelete')->name('adminiy.imageDelete');
+	Route::post('/delete/ylisting/{table}/{id?}', 'DNE\CoreDeletesController@ylistingDelete')->name('adminiy.delete.ylisting');
 	/*DELETING CORE END*/
 	/*FRONT END EDITOR*/
 	Route::post('/statusAjaxUpdateCustom', 'DNE\FrontEndEditorController@statusAjaxUpdateCustom');
