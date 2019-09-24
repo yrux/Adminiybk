@@ -197,11 +197,13 @@ var fastCRUDForm = (ytableObj,_selectedData=undefined,viewmode='create/edit')=>{
 	    dateFormat: "H:i",
 	    inline: true,
 	});
-	var a = $(".select2-parent")[0] ? $(".select2-parent") : $("body");
-	$("select.select2").select2({
-		dropdownAutoWidth: !0,
-		width: "100%",
-		dropdownParent: a
+	$("select.select2").each(function(){
+		var a = $(this).parent();
+		$(this).select2({
+			dropdownAutoWidth: !0,
+			width: "100%",
+			dropdownParent: a
+		})
 	})
 	$(".color-picker").each(function() {
 		var a = $(this).data("horizontal") || !1;
@@ -420,6 +422,9 @@ var createImageArea = ({name,column,typeData,alias},value)=>{
 		_src = img_url(value);
 	} else {
 		_src='http://www.placehold.it/200x150/EFEFEF/AAAAAA?text=no+image';
+	}
+	if(currentFormMode=='view'){
+		_hasImage=false;
 	}
 	return '<div class="form-group"><label for="'+column+'">\
         '+name+'\

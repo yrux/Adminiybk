@@ -16,7 +16,7 @@ $data = Helper::returnDataSet('m_flag',"is_config = 1");
 {{$items->flag_show_text}}
 @endif
 </label>
-<input type="text" class="form-control" value="{{$items->flag_value}}" name="{{$items->flag_type}}" />
+<input type="text" class="form-control" value="{{$items->flag_value==$items->flag_additionalText?$items->flag_value:$items->flag_additionalText}}" name="{{$items->flag_type}}" />
 <i class="form-group__bar"></i>
 </div>
 </div>
