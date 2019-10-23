@@ -23,9 +23,9 @@
                     <a href="#" data-ma-action="search-open"><i class="zmdi zmdi-search"></i></a>
                 </li>
                 <li class="dropdown top-nav__notifications">
-                    <a href="#" data-toggle="dropdown" class="top-nav__notify">
+                    <!-- <a href="#" data-toggle="dropdown" class="top-nav__notify">
                         <i class="zmdi zmdi-notifications"></i>
-                    </a>
+                    </a> -->
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu--block">
                         <div class="listview listview--hover">
                             <div class="listview__header">

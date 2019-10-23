@@ -40,6 +40,15 @@ _myFilters.forEach((a,e)=>{
     }
 });
 var _imageCol = default_table_name+'_image';
+var _titles = default_table_name.toUpperCase()+' Management';
+if(default_table_name=='logo'){
+    _titles='Logo Management';
+}
+if(default_table_name=='favicon'){
+ _titles='Favicon Management';   
+}
+$('#ytable-FastCRUD').find('h5.modal-title.pull-left').html('<a href="'+base_url('adminiy')+'"><i class="zmdi zmdi-home"></i></a>'+' / '+_titles)
+$('title').html(_titles);
 /*When you want to use FAST CRUD of ytable and you have used joins in the listing use 
 type:'ignore' 
 in columns which are being shown by the join and not the part of , 

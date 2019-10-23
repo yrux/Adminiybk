@@ -45,10 +45,15 @@
 @endsection
 @section('js')
 <script type="text/javascript">
-    (()=>{
+    $(document).ready(function(){
         $(".form-group--float").each(function() {
-            0 == !$(this).find(".form-control").val().length && $(this).find(".form-control").addClass("form-control--active")
+            if($(this).find(".form-control").length>0){
+                0 == !$(this).find(".form-control").val().length && $(this).find(".form-control").addClass("form-control--active")
+            }
         });
-    })()
+        $(".login__block__body").on("blur", ".form-group--float .form-control", function() {
+            0 == $(this).val().length ? $(this).removeClass("form-control--active") : $(this).addClass("form-control--active")
+        });
+    })
 </script>
 @endsection

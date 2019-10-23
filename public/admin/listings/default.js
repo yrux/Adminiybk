@@ -51,6 +51,17 @@ _default will set a default value for new records
         //     callback:'setDropdownValue'
         // }
         // ,{
+        //     column:'field_type_2',
+        //     name:'Type 2',
+        //     type:'dropdown',
+        //     typeData:{
+        //      0 : 'Value',
+        //      1 : 'Value 2',
+        //},
+        //     hiddenInList:true,
+        //     callback:'setDropdownValue'
+        // }
+        // ,{
         //     column:'field_type',
         //     name:'Type',
         //     type:'select2',

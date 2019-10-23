@@ -36,6 +36,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title pull-left">{{$FastCrudHeading}}</h5>
+                <h5 class="modal-title pull-right" ><a href="javascript:void(0)" data-ytablereset="true" data-dismiss="modal"><i class="zmdi zmdi-close zmdi-hc-fw"></i></a></h5>
             </div>
             <div class="modal-body">
                 <form  enctype="multipart/form-data" class="row CrudForm" data-customcallbackFail="ytableCrudCBFail" data-nosubmit="true" method="POST" data-noinfo="true" data-customcallback="ytableCrudCB" action="{{route('adminiy.fastCRUD')}}" id="ytable-FastCRUDForm">
@@ -99,6 +100,7 @@
 var _defaultLimit = window.localStorage.getItem('ytable-default-limit')?window.localStorage.getItem('ytable-default-limit'):10;
 var sorted_column;
 var sorted_column_type=' asc';
+var _altpressed=[0,0];
 (function() {
     @if($listingData->fast_crud=='1')
         enableFastCrud();
@@ -141,6 +143,20 @@ var sorted_column_type=' asc';
         // $('body').addClass('ytableBlur');
    },function(){
     // $('body').removeClass('ytableBlur');
+   });
+   $(document).keyup(function(e){
+        /*z=90,x=88,c=67*/
+        if(e.keyCode==90&&e.shiftKey){
+            /*new form modal*/
+            document.getElementsByClassName('ytable-addrecord')[0].click();
+        }
+        if(e.keyCode==88&&e.shiftKey){
+            /*sort modal*/
+            document.getElementsByClassName('ytable-sortrecord')[0].click();
+        }
+        if(e.keyCode==67&&e.shiftKey){
+            /*editing content counter*/
+        }
    })
 })();
 function sort_ytable_dynamic(_r) {
@@ -218,7 +234,8 @@ function sort_ytable_dynamic(_r) {
 }
 .img-responsive {
     width: 100%;
-    height: auto;
+    height:
+    .eventSelected[data-ytrcount="1"]:after {content: 'Press 1 to edit this row';position: absolute;left: 0;width: 100%;height: 37%;color: white;background: #32c7875e;text-align: center;margin: 0 auto;right: 0;overflow: hidden;} auto;
 }
 .no-padding-left{
     padding-left: 0px;
@@ -267,6 +284,38 @@ width:334px;
 }
 #ytable-sortModal-body .btn.active.desc > i.zmdi-sort-desc {
     display: inline-block;
+}
+[data-ytablereset="true"] {
+    color: black;
+}
+tbody.ytableBody {
+    overflow: hidden;
+    position: relative;
+}
+@for($i=1;$i<101;$i++)
+.eventSelected[data-ytrcount="{{$i}}"] {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+    word-break: break-all;
+}
+.eventSelected[data-ytrcount="{{$i}}"]:after {
+    content: 'Press {{$i}} to edit this row';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 55px;
+    color: white;
+    background: #32c7875e;
+    text-align: center;
+    margin: 0 auto;
+    right: 0;
+    overflow: hidden;
+}
+@endfor
+.table-dark {
+    position: relative;
 }
 </style>
 @endsection

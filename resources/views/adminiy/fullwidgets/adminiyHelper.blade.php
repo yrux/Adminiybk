@@ -547,7 +547,16 @@ var turnOnImagedelete = ()=>{
                     return ajaxify('src='+_src,'POST',base_url('adminiy/delete/ylisting/image'));
                 }
             }).then(deleted=>{
-            	console.log(deleted);
+            	if(deleted.status){
+            		swal.close();
+            		@if($listingData->table_name=='imagetable')
+            		location.reload();
+            		@else
+					$('#ytable-FastCRUD').modal('hide');
+					notify(1,'Image Deleted');
+            		@endif
+            		
+            	}
             })
 		});
 	}
