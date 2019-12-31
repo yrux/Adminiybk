@@ -12,6 +12,7 @@
                         <div class="dropdown-menu">
                             <!-- <a class="dropdown-item" href="#">View Profile</a>
                             <a class="dropdown-item" href="#">Settings</a> -->
+                            <a class="dropdown-item" href="javascript:void(0)" onclick="$('#modal-changepassword').modal('toggle')">Change Password</a>
                             <a class="dropdown-item" href="{{route('adminiy.logout')}}">Logout</a>
                         </div>
                     </div>

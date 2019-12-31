@@ -106,7 +106,7 @@ var ytableCrudCBFail = (res)=>{
 	}
 }
 var currentFormMode = '';
-var fastCRUDForm = (ytableObj,_selectedData=undefined,viewmode='create/edit')=>{
+async function fastCRUDForm(ytableObj,_selectedData=undefined,viewmode='create/edit'){
 	currentFormMode=viewmode;
 	if(currentFormMode=='view'){
 		document.getElementById('ytable-fastCrudRectify').setAttribute('disabled','true');
@@ -160,6 +160,10 @@ var fastCRUDForm = (ytableObj,_selectedData=undefined,viewmode='create/edit')=>{
 		}
 		else if(formColumns[i].type=='time'){
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createTime(formColumns[i],val);
+		}
+		else if(formColumns[i].type=='multiimage'){
+			console.log(formColumns[i],val);
+			//document.getElementById('ytable-FastCRUDFields').innerHTML+=createMultiImage(formColumns[i],val);
 		}
 		else if(formColumns[i].type=='slug'){
 			var _newControl =formColumns[i];
@@ -574,6 +578,27 @@ function turnOnDblClickCopyyTable(){
 		}
 	});
 	setting_checkbox_grid();
+}
+function turnOnMultiImage(){
+	var table_to_get = [];
+	var ids_to_get = [];
+	ytabled.colnames.forEach(function(e){
+		if(e.type=='multiimage'){
+			if(e.attributes){
+				table_to_get.push(e.attributes.table_name);
+	        } else {
+				table_to_get.push(ytabled.table);
+			}
+		}
+	});
+	var ids_visible_indexes = document.querySelectorAll('[data-ytablerowid]');
+	for(var i=0;i<ids_visible_indexes.length;i++){
+		ids_to_get.push(ids_visible_indexes[i].getAttribute('data-ytablerowid'));
+	}
+	if(ids_to_get.length>0){
+		ajaxifyN({tables:table_to_get,ids:ids_to_get},'POST','{{route('adminiy.multiimages.fetch')}}');
+	}
+	//console.log(table_to_get,ids_to_get);
 }
 function setting_checkbox_grid(){
     $('.toggle-switch__checkbox').click(function(){

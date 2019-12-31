@@ -75,6 +75,24 @@ in columns which are being shown by the join and not the part of ,
             hiddenInList:true,
         }
         ,{
+            column:'id',
+            name:'Images',
+            type:'multiimage',
+            attributes:{
+                table_name:'m_flag',
+            },
+            hiddenInList:true,
+        }
+        ,{
+            column:'id',
+            name:'Another Images',
+            type:'multiimage',
+            attributes:{
+                table_name:'m_flag_optional',
+            },
+            hiddenInList:true,
+        }
+        ,{
             column:'flag_value',
             name:heading,
             type:'text',
@@ -132,6 +150,7 @@ in columns which are being shown by the join and not the part of ,
         // "group by" : "table_notes.id",
     },ydebugger);
     ytabled.autoCallbacksonBuild.push('turnOnDblClickCopyyTable');
+    ytabled.autoCallbacksonBuild.push('turnOnMultiImage');
 window.addEventListener('ytable_beforeRow', function (e) {
     //console.log(e.detail);
     //var olddata = ytabled.currentData[e.detail.dataIndex].id;

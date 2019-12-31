@@ -54,6 +54,7 @@
         </div>
     </div>
     @include('adminiy.layout.footer')
+    @include('adminiy.fullwidgets.changepasswordmodal')
 </section>
     @endif
 </main>

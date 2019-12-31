@@ -226,7 +226,15 @@ public static function getPaginator($pageLimit=20){
       }
       $query = "SELECT ".$table.".*,imagetable.img_path,imagetable.id as img_id from ".$table." left join imagetable on imagetable.ref_id = ".$table.".".$col." and imagetable.table_name = '".$table."' and imagetable.type = '1' where ".$table.".".$col." = ".$id.$add;
        return self::firstRow($query);
-    }
+  }
+  public static function getImageWithRowDC($table,$col,$id,$where=''){
+      $add = '';
+      if($where!=''){
+        $add = ' AND '.$where;
+      }
+      $query = "SELECT ".$table.".*,imagetable.img_path,imagetable.id as img_id from ".$table." left join imagetable on imagetable.ref_id = ".$table.".id and imagetable.table_name = '".$table."' and imagetable.type = '1' where ".$table.".".$col." = '".$id."'".$add;
+       return self::firstRow($query);
+  }
   public static function getImageWithData($table,$col,$id,$where='',$chunked=0,$extra=''){
       $add = '';
       if($where!=''){
@@ -609,4 +617,20 @@ public static function getPaginator($pageLimit=20){
 			print '<label class="label label-danger" style="margin-bottom: 10px;display: inline-block;padding: 5px;background: transparent;color: #d9534f;font-size: 12px;font-weight: bolder;">'.$errors->first($field).'</label>';
 		}
 	}
+  public static function getimageoftable($table,$refid,$default){
+    $data = self::returnRow('imagetable',"table_name='".$table."' and type=1 and ref_id=".$refid);
+    if(!$data){
+      return asset($default);
+    } else{
+      return asset($data->img_path);
+    }
+  }
+  public static function getImageWithRowDC($table,$col,$id,$where=''){
+      $add = '';
+      if($where!=''){
+        $add = ' AND '.$where;
+      }
+      $query = "SELECT ".$table.".*,imagetable.img_path,imagetable.id as img_id from ".$table." left join imagetable on imagetable.ref_id = ".$table.".id and imagetable.table_name = '".$table."' and imagetable.type = '1' where ".$table.".".$col." = '".$id."'".$add;
+       return self::firstRow($query);
+  }
 }

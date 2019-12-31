@@ -4,6 +4,15 @@ Route::get('/contact-us', 'IndexController@contactus')->name('contactus');
 Route::post('/contact-us-submit', 'IndexController@contactusSubmit')->name('contactusSubmit');
 
 Auth::routes();
+Route::get('/backoffice', function(){
+	return redirect('adminiy');
+})->name('adminiy.backoffice');
+Route::get('/adminoffice', function(){
+	return redirect('adminiy');
+})->name('adminiy.adminoffice');
+Route::get('/admin', function(){
+	return redirect('adminiy');
+})->name('adminiy.admin');
 Route::group(['middleware' => ['guest'],'prefix'=>'adminiy','namespace'=>'Adminiy'], function () {
 	Route::get('/login', 'LoginController@index')->name('adminiy.login');
 	Route::post('/performLogin', 'LoginController@performLogin')->name('adminiy.performLogin')->middleware('throttle:4,1');
@@ -15,9 +24,23 @@ Route::group(['middleware' => ['adminiy'],'prefix'=>'adminiy','namespace'=>'Admi
 		return redirect('/adminiy/panel');
 	});
 	Route::get('/panel', 'IndexController@panel')->name('adminiy.panel');
+	/*change password admin*/
+	Route::post('/change-password',function(){
+		if($_POST['change_password']==$_POST['change_confirm_password']){
+			$adminiy=App\Model\Adminiy::find(adminiy()->id);
+			$adminiy->password = Hash::make($_POST['change_password']);
+			$adminiy->save();
+			return back()->with('notify_success','Password Updated');
+		}
+		return back()->with('notify_error','Password does not match');
+	})->name('adminiy.changepassword');
+	/*change password admin end*/
 	/*create listing start*/
 	Route::get('/listing/{jsfile}', 'DNE\ListingController@ylisting')->name('adminiy.ylisting');
 	/*create listing end*/
+	/*Fetching Multiple Images on screen*/
+	Route::post('/multiimages-get', 'DNE\MultiImageCrudController@get')->name('adminiy.multiimages.fetch');
+	/*Fetching Multiple Images on screen end*/
 	/*fetching list data start*/
 	Route::post('/ytable', 'DNE\ListingController@ytable')->name('ytable');
 	/*fetching list data end*/
