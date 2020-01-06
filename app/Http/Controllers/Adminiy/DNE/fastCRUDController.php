@@ -83,7 +83,8 @@ class fastCRUDController extends IndexController
                     $imagetable->table_name = $imageTable_add;
                     $imagetable->ref_id = $model_name_test->$unique_column;
                     $imagetable->type = 1;
-                    $path = $request->file($anyImageV)->store('Uploads/'.$table.'/'.md5(Str::random(20)), 'public');
+                    $custom_file_name = time().'-'.$request->file($anyImageV)->getClientOriginalName();
+                    $path = $request->file($anyImageV)->storeAs('Uploads/'.$table.'/'.md5(Str::random(20)),$custom_file_name,'public');
                     $imagetable->img_path = $path;
                     $imagetable->save();
                 }

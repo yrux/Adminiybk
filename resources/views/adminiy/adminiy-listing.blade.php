@@ -22,7 +22,7 @@
         <div id="input-slider-ytable"></div>
     </div>
 </div>
-<table class="table table-dark mb-0 ytable">
+<table class="mb-0 table table-hover ytable">
    
 </table>
 <nav class="ytablepaginate">
@@ -31,7 +31,7 @@
 </ul>
 </nav>
 @if($listingData->fast_crud=='1')
-<div class="modal fade" id="ytable-FastCRUD" tabindex="-1" style="display: none;" aria-hidden="true">
+<div class="modal fade" data-backdrop="static" id="ytable-FastCRUD" tabindex="-1" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -184,7 +184,7 @@ function sort_ytable_dynamic(_r) {
 @section('css')
 <style type="text/css">
 .ytablepaginate {
-    background: #313a44;
+    /*background: #313a44;*/
     padding-top: 15px;
     padding-bottom: 3px;
     border-top: 1px solid;
@@ -230,6 +230,9 @@ function sort_ytable_dynamic(_r) {
     height: 2rem;
     font-size: 14px;
     margin-right: 4px;
+    color:black;
+}
+.ytableBody .btn--icon:hover{
     color:white;
 }
 .img-responsive {
@@ -316,6 +319,9 @@ tbody.ytableBody {
 @endfor
 .table-dark {
     position: relative;
+}
+.invalid-tooltip {
+    color: black;
 }
 </style>
 @endsection
