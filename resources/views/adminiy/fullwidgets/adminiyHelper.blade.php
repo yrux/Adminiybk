@@ -132,6 +132,9 @@ async function fastCRUDForm(ytableObj,_selectedData=undefined,viewmode='create/e
 		if(formColumns[i].type=='text'||formColumns[i].type=='hidden'||formColumns[i].type=='number'||formColumns[i].type=='email'||formColumns[i].type=='password'){
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createinput(formColumns[i],val);
 		} else if(formColumns[i].type=='checkbox'){
+			if(!val){
+				val='0';
+			}
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createCheckbox(formColumns[i],val);
 		} 
 		else if(formColumns[i].type=='color'){
@@ -145,6 +148,9 @@ async function fastCRUDForm(ytableObj,_selectedData=undefined,viewmode='create/e
 		}
 		else if(formColumns[i].type=='multiselect'){
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createMultiselect(formColumns[i],val);
+		}
+		else if(formColumns[i].type=='tag'){
+			document.getElementById('ytable-FastCRUDFields').innerHTML+=createTaginput(formColumns[i],val);
 		}
 		else if(formColumns[i].type=='textarea'||formColumns[i].type=='wyswig'){
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createTextArea(formColumns[i],val);
@@ -207,6 +213,15 @@ async function fastCRUDForm(ytableObj,_selectedData=undefined,viewmode='create/e
 			dropdownAutoWidth: !0,
 			width: "100%",
 			dropdownParent: a
+		})
+	})
+	$("select.select2-tag").each(function(){
+		var a = $(this).parent();
+		$(this).select2({
+			dropdownAutoWidth: !0,
+			width: "100%",
+			dropdownParent: a,
+			tags:true,
 		})
 	})
 	$(".color-picker").each(function() {
@@ -399,6 +414,26 @@ var createMultiselect = ({name,column,typeData},value='')=>{
 	</div>\
 	</div>';
 }
+var createTaginput = ({name,column},value='')=>{
+	var _opt='';
+	if(value){
+		var _broke = value.split(',');
+		for(var jj=0;jj<_broke.length;jj++){
+			_selectedOrNot = ' selected=""';
+			_opt+='<option '+_selectedOrNot+' value="'+_broke[jj]+'">'+_broke[jj]+'</option>';
+		}
+	}
+	return '<div class="form-group">\
+	<div class="select select2-parent">\
+	<label>'+name+'</label>\
+	<select class="form-control select2-tag" name="'+column+'[]" multiple>\
+		'+_opt+'\
+	</select>\
+	<div class="invalid-tooltip"></div>\
+	<i class="form-group__bar"></i>\
+	</div>\
+	</div>';
+}
 var createTextArea = ({name,column,type,_default},value='')=>{
 	var _dynamicClass = '';
 	if(value==''){
@@ -421,7 +456,7 @@ var createImageArea = ({name,column,typeData,alias},value)=>{
 	if(alias){
 		column=alias;
 	}
-	if(value!=''){
+	if(value){
 		_hasImage=true;
 		_src = img_url(value);
 	} else {

@@ -58,7 +58,8 @@ class MultiImageController extends IndexController
         if($model_name_test->save()){
             if(count($anyImage)>0){
                 foreach($anyImage as $anyImageV){
-                    $path = $request->file($anyImageV)->store('Uploads/'.$table.'/'.md5(Str::random(20)), 'public');
+                    $custom_file_name = time().'-'.$request->file($anyImageV)->getClientOriginalName();
+                    $path = $request->file($anyImageV)->storeAs('Uploads/'.$table.'/'.md5(Str::random(20)),$custom_file_name,'public');
                     $model_name_test->img_path = $path;
                     $model_name_test->save();
                 }

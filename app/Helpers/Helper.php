@@ -625,12 +625,12 @@ public static function getPaginator($pageLimit=20){
       return asset($data->img_path);
     }
   }
-  public static function getImageWithRowDC($table,$col,$id,$where=''){
-      $add = '';
-      if($where!=''){
-        $add = ' AND '.$where;
-      }
-      $query = "SELECT ".$table.".*,imagetable.img_path,imagetable.id as img_id from ".$table." left join imagetable on imagetable.ref_id = ".$table.".id and imagetable.table_name = '".$table."' and imagetable.type = '1' where ".$table.".".$col." = '".$id."'".$add;
-       return self::firstRow($query);
-  }
+  // public static function getImageWithRowDC($table,$col,$id,$where=''){
+  //     $add = '';
+  //     if($where!=''){
+  //       $add = ' AND '.$where;
+  //     }
+  //     $query = "SELECT ".$table.".*,imagetable.img_path,imagetable.id as img_id from ".$table." left join imagetable on imagetable.ref_id = ".$table.".id and imagetable.table_name = '".$table."' and imagetable.type = '1' where ".$table.".".$col." = '".$id."'".$add;
+  //      return self::firstRow($query);
+  // }
 }

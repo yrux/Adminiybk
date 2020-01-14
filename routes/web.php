@@ -106,6 +106,20 @@ Route::group(['middleware' => ['customer'],'prefix'=>'customer','namespace'=>'Cu
 	Route::get('/',function(){
 		return redirect('/customer/panel');
 	});
+	/*change password customer*/
+	Route::post('/change-password',function(){
+		if(!empty($_POST['change_password'])&&!empty($_POST['change_confirm_password'])){
+			if($_POST['change_password']==$_POST['change_confirm_password']){
+				$adminiy=App\Model\User::find(Auth::user()->id);
+				$adminiy->password = Hash::make($_POST['change_password']);
+				$adminiy->save();
+				return back()->with('notify_success','Password Updated');
+			}
+			return back()->with('notify_error','Password does not match');
+		}
+		return back()->with('notify_error','Password and confirm password can not be empty');
+	})->name('customer.changepassword');
+	/*change password customer end*/
 	Route::get('/panel', 'IndexController@index')->name('customer.panel');
 	Route::get('/logout', 'IndexController@logout')->name('customer.logout');
 });

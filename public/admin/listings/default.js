@@ -78,6 +78,11 @@ _default will set a default value for new records
         //     callback:'setMultiselectValue'
         // }
         // ,{
+        //     column:'field_tags',
+        //     name:'Tags',
+        //     type:'tag',
+        // }
+        // ,{
         //     column:'color_field_name',
         //     name:'Color Picker',
         //     type:'color',
@@ -121,6 +126,7 @@ _default will set a default value for new records
             name:'Is Active?',
             callback:'is_active',
             type:'checkbox',
+            _default:'1',
         }
     ],
     [
