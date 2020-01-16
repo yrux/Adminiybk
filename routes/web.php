@@ -40,6 +40,7 @@ Route::group(['middleware' => ['adminiy'],'prefix'=>'adminiy','namespace'=>'Admi
 	/*create listing end*/
 	/*Fetching Multiple Images on screen*/
 	Route::post('/multiimages-get', 'DNE\MultiImageCrudController@get')->name('adminiy.multiimages.fetch');
+	Route::get('/multiimages-get-one/{table}/{id}', 'DNE\MultiImageCrudController@getone')->name('adminiy.multiimages.fetchone');
 	/*Fetching Multiple Images on screen end*/
 	/*fetching list data start*/
 	Route::post('/ytable', 'DNE\ListingController@ytable')->name('ytable');

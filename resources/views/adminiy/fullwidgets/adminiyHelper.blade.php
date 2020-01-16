@@ -105,6 +105,20 @@ var ytableCrudCBFail = (res)=>{
 		}
 	}
 }
+var getimage = async (imagesdata,tablename,type=1)=>{
+	if(imagesdata){
+		if(imagesdata.status){
+			if(imagesdata.data[tablename]){
+				if(type==1){
+					return imagesdata.data[tablename][0]
+				}else{
+					return imagesdata.data[tablename];
+				}
+			}
+		}
+	}
+	return false;
+}
 var currentFormMode = '';
 async function fastCRUDForm(ytableObj,_selectedData=undefined,viewmode='create/edit'){
 	currentFormMode=viewmode;
@@ -121,6 +135,29 @@ async function fastCRUDForm(ytableObj,_selectedData=undefined,viewmode='create/e
 	var i=0;
 	var formColumns = ytableObj.colnames;
 	document.getElementById('ytable-FastCRUDFields').innerHTML='';
+	var imagetablearray = {};
+	for(var j=0;j<formLength;j++){
+		var val = '';
+		if(_selectedData){
+			val = _selectedData[formColumns[i].column];
+			if(formColumns[i].alias){
+				val = _selectedData[formColumns[i].alias];
+			}
+		}
+		if(formColumns[j].type=='image'){
+			if(parseInt(val)){
+				imagetablearray[formColumns[j]._table]={type:1,value:val};
+			}
+		}
+		else if(formColumns[j].type=='multiimage'){
+			if(parseInt(val)){
+				imagetablearray[formColumns[j]._table]={type:2,value:val};
+			}
+		}
+	}
+	var imagesdata = await ajaxifyN({imagetablearray:imagetablearray},'POST','{{route('adminiy.multiimages.fetch')}}').then(function(e){
+		return e;
+	});
 	for(i=0;i<formLength;i++){
 		var val = '';
 		if(_selectedData){
@@ -156,7 +193,7 @@ async function fastCRUDForm(ytableObj,_selectedData=undefined,viewmode='create/e
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createTextArea(formColumns[i],val);
 		}
 		else if(formColumns[i].type=='image'){
-			document.getElementById('ytable-FastCRUDFields').innerHTML+=createImageArea(formColumns[i],val);
+			document.getElementById('ytable-FastCRUDFields').innerHTML+=await createImageArea(formColumns[i],val,imagesdata);
 		}
 		else if(formColumns[i].type=='video'){
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createVideoArea(formColumns[i],val);
@@ -168,8 +205,7 @@ async function fastCRUDForm(ytableObj,_selectedData=undefined,viewmode='create/e
 			document.getElementById('ytable-FastCRUDFields').innerHTML+=createTime(formColumns[i],val);
 		}
 		else if(formColumns[i].type=='multiimage'){
-			console.log(formColumns[i],val);
-			//document.getElementById('ytable-FastCRUDFields').innerHTML+=createMultiImage(formColumns[i],val);
+			document.getElementById('ytable-FastCRUDFields').innerHTML+=await createMultiImage(formColumns[i],imagesdata);
 		}
 		else if(formColumns[i].type=='slug'){
 			var _newControl =formColumns[i];
@@ -450,16 +486,44 @@ var createTextArea = ({name,column,type,_default},value='')=>{
 		<i class="form-group__bar"></i>\
 	</div>';
 }
-var createImageArea = ({name,column,typeData,alias},value)=>{
+var createMultiImage = async ({name,column,_table},imagesdata)=>{
+	/*value variable is of no use now as we have added promises and feteched all images at once*/
+	var image = await getimage(imagesdata,_table,2);
+	var imagerender = '';
+	if(image){
+		image.forEach(function(e){
+			imagerender+=`<div class="col-md-2 d-inline-block no-padding-left dynaremove"><a data-toggle="tooltip" title="Remove Image" class="remove-fastcrud-image"></a><img src="${img_url(e.img_path)}" FC-src="${e.img_path}" class="img-responsive" /></div>`
+		})
+	}
 	var _src='';
 	var _hasImage=false;
-	if(alias){
-		column=alias;
+	column = _table+'_multiimage';
+	if(image){
+		
 	}
-	if(value){
-		_hasImage=true;
-		_src = img_url(value);
-	} else {
+	if(currentFormMode=='view'){
+		_hasImage=false;
+	}
+	return '<div class="form-group"><label for="'+column+'">\
+        '+name+'\
+    </label><div class="col-md-6 no-padding-left">\
+	<input onchange="showPreviewmultiple(this)" id="'+column+'" name="'+column+'[]" multiple type="file" />\
+	</div></div><div class="form-group"><div class="col-md-12 no-padding-left" id="'+column+'_multipreview">'+imagerender+'</div></div>';
+}
+var createImageArea = async ({name,column,_table},value,imagesdata)=>{
+	/*value variable is of no use now as we have added promises and feteched all images at once*/
+	var image = await getimage(imagesdata,_table,1);
+	var _src='';
+	var _hasImage=false;
+	column = _table+'_image';
+	if(image){
+		if(image.img_path){
+			_hasImage=true;
+			value=image.img_path;
+			_src = img_url(image.img_path);
+		}
+	}else{
+		value=null;
 		_src='http://www.placehold.it/200x150/EFEFEF/AAAAAA?text=no+image';
 	}
 	if(currentFormMode=='view'){

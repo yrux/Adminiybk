@@ -205,6 +205,24 @@ var showPreview = (input,imgId='')=>{
     $('#'+imgId).hide();
   }
 }
+var showPreviewmultiple = (input,divId='')=>{
+  if(divId==''){
+    divId = $(input).attr('id')+'_multipreview';
+  }
+  var placeToInsertImagePreview = $('#'+divId)
+  $('#'+divId).find('.runtimemultiadded').remove();
+  if (input.files) {
+      var filesAmount = input.files.length;
+      for (i = 0; i < filesAmount; i++) {
+          var reader = new FileReader();
+          reader.onload = function(event) {
+              $(placeToInsertImagePreview).append(`<div class="col-md-2 d-inline-block no-padding-left runtimemultiadded"><img src="${event.target.result}" class="img-responsive" /></div>`)
+              //$($.parseHTML('<img>')).attr('class','img-responsive runtimemultiadded').attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+          }
+          reader.readAsDataURL(input.files[i]);
+      }
+  }
+}
 var CopyText = (text)=>{
   var _fk = document.createElement('input');
   var _body = document.querySelector('body');

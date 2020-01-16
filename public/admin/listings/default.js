@@ -1,5 +1,5 @@
  var ytabled;
- var _imageCol = tablename+'_image';
+ //var _imageCol = tablename+'_image';
 /*When you want to use FAST CRUD of ytable and you have used joins in the listing use 
 type:'ignore' 
 in columns which are being shown by the join and not the part of , 
@@ -95,18 +95,19 @@ _default will set a default value for new records
         //     hiddenInList:true,
         //     typeData:'createAnchor'
         // }
+        // ,{
+        //     column:'id',
+        //     name:'multiimage',
+        //     type:'multiimage',
+        //     hiddenInList:true,
+        //     _table:`${tablename}_optional`,
+        // }
         ,{
-            column:_imageCol,
+            column:'id',
             name:'Image',
-            callback:'show_image_ytable',
             type:'image',
-            typeData : _imageCol,
             hiddenInList:true,
-        }
-        ,{
-            column:'img_id',
-            type:'ignore',
-            hiddenInList:true,
+            _table:tablename,
         }
         // ,{
         //     column:'table_thumb_image',
@@ -130,7 +131,7 @@ _default will set a default value for new records
         }
     ],
     [
-         { "left join" : "(select id as img_id,ref_id,table_name as img_tblename,img_path as "+_imageCol+" from imagetable where imagetable.table_name='"+tablename+"' and imagetable.type='1') as imagetable on  imagetable.ref_id="+tablename+".id" } ,
+         //{ "left join" : "(select id as img_id,ref_id,table_name as img_tblename,img_path as "+_imageCol+" from imagetable where imagetable.table_name='"+tablename+"' and imagetable.type='1') as imagetable on  imagetable.ref_id="+tablename+".id" } ,
          //{ "left join" : "(select id as img_id_thumb,ref_id as thumb_ref_id,table_name as img_tblename_thumb,img_path as table_thumb_image from imagetable where imagetable.table_name='table_thumb' and imagetable.type='1') as imagetable_thumb on  imagetable_thumb.thumb_ref_id=table.id" } ,
     ],
     [

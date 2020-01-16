@@ -53,7 +53,8 @@ in columns which are being shown by the join and not the part of ,
             column:'inquiries_phone',
             name:'Phone',
             type:'text',
-        },{
+        }
+        ,{
             column:'inquiries_email',
             name:'Email',
             type:'text',
@@ -107,6 +108,7 @@ in columns which are being shown by the join and not the part of ,
          //{ "left join" : "(select id as img_id_thumb,ref_id as thumb_ref_id,table_name as img_tblename_thumb,img_path as table_notes_thumb_image from imagetable where imagetable.table_name='table_notes_thumb' and imagetable.type='1') as imagetable_thumb on  imagetable_thumb.thumb_ref_id=table_notes.id" } ,
     ],
     [
+        'editFast',
         'viewFast',
         'delete',
     ],'.ytable',{

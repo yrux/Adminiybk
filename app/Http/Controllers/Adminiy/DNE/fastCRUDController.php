@@ -31,6 +31,7 @@ class fastCRUDController extends IndexController
             return;
         }
         $anyImage = array();
+        $multiImage = array();
         $inputs = $request->except(['modelName','ytable_table','unique_column']);
         $statusInputs = array('is_active','is_deleted','is_featured');
         /*before save*/
@@ -44,6 +45,8 @@ class fastCRUDController extends IndexController
             if(!in_array($inputK, $statusInputs)){
                 if(Str::endsWith($inputK,'_image')){
                     array_push($anyImage,$inputK);
+                } else if(Str::endsWith($inputK,'_multiimage')){
+                    array_push($multiImage,$inputK);
                 } else {
                     $model_name_test->$inputK = $inputV;
                 }
@@ -62,10 +65,10 @@ class fastCRUDController extends IndexController
             }
         }
         if($model_name_test->save()){
+            $unique_column = $request->unique_column;
             if(count($anyImage)>0){
                 foreach($anyImage as $anyImageV){
                     $imageTable_add = Str::replaceLast('_image', '', $anyImageV);
-                    $unique_column = $request->unique_column;
                     $imagetable = imagetable::where('table_name',$imageTable_add)->where('type',1)->where('ref_id',$model_name_test->$unique_column)->first();
                     if(!$imagetable){
                         $imagetable = new imagetable;
@@ -89,6 +92,23 @@ class fastCRUDController extends IndexController
                     $imagetable->save();
                 }
             }
+            /*for multiimage*/
+            if(count($multiImage)>0){
+                foreach($multiImage as $multiImageV){
+                    $imageTable_add = Str::replaceLast('_multiimage', '', $multiImageV);
+                    foreach($request->file($multiImageV) as $image){
+                        $imagetable = new imagetable;
+                        $imagetable->table_name = $imageTable_add;
+                        $imagetable->type=2;
+                        $imagetable->ref_id = $model_name_test->$unique_column;
+                        $custom_file_name = time().'-'.$image->getClientOriginalName();
+                        $path = $image->storeAs('Uploads/'.$table.'/'.md5(Str::random(20)),$custom_file_name,'public');
+                        $imagetable->img_path = $path;
+                        $imagetable->save();
+                    }
+                }
+            }
+            /*for multiimage end*/
             /*after save*/
             try{
                 app("App\Http\Controllers\Adminiy\FCCallbackControllers\\".$table."Controller")->afterInsert($model_name_test);
