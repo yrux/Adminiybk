@@ -715,7 +715,7 @@ function setting_checkbox_grid(){
 	        /*on false*/
 	    }
 	    ajaxifyN(param,'POST',base_url('adminiy/update-checkbox')).then(function(e){
-	        ytabled.resetyTable();
+	        //ytabled.resetyTable();
 	    });
     })
 }
