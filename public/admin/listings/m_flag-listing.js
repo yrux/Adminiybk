@@ -75,24 +75,6 @@ in columns which are being shown by the join and not the part of ,
             hiddenInList:true,
         }
         ,{
-            column:'id',
-            name:'Images',
-            type:'multiimage',
-            attributes:{
-                table_name:'m_flag',
-            },
-            hiddenInList:true,
-        }
-        ,{
-            column:'id',
-            name:'Another Images',
-            type:'multiimage',
-            attributes:{
-                table_name:'m_flag_optional',
-            },
-            hiddenInList:true,
-        }
-        ,{
             column:'flag_value',
             name:heading,
             type:'text',
