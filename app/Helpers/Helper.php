@@ -625,6 +625,10 @@ public static function getPaginator($pageLimit=20){
       return asset($data->img_path);
     }
   }
+  public static function returnMod($modelname){
+    $model_name = 'App\Model\\'.$modelname;
+    return $model_name::where('is_active',1)->where('is_deleted',0);
+  }
   // public static function getImageWithRowDC($table,$col,$id,$where=''){
   //     $add = '';
   //     if($where!=''){
