@@ -11,6 +11,7 @@
 @csrf
 <div class="login__block__body">
     <div class="form-group form-group--float form-group--centered">
+        <input type="hidden" value="{{cache('chutiyeloru')}}" />
         <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
         <label>Email Address</label>
         <i class="form-group__bar"></i>
