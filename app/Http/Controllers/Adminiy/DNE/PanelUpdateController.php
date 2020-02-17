@@ -37,7 +37,7 @@ class PanelUpdateController extends IndexController
         //https://api.github.com/repos/yrux/Adminiy/contents
         //https://api.github.com/repos/yrux/Adminiy/contents/public/admin/core-files.json?ref=master
         //curl https://api.github.com/repos/yrux/Adminiy/contents/public/admin/core-files.json
-        $endpoint = "https://api.github.com/repos/yrux/Adminiy/contents/public/admin/core-files.json?ref=master";
+        $endpoint = "https://api.github.com/repos/yrux/Adminiybk/contents/public/admin/core-files.json?ref=master";
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET',$endpoint);
         $statusCode = $response->getStatusCode();
@@ -46,7 +46,7 @@ class PanelUpdateController extends IndexController
         return $data;
     }
     public static function getGitFile($file){
-        $endpoint = "https://api.github.com/repos/yrux/Adminiy/contents/".$file;
+        $endpoint = "https://api.github.com/repos/yrux/Adminiybk/contents/".$file;
         $client = new \GuzzleHttp\Client();
         $response = $client->request('GET',$endpoint);
         $statusCode = $response->getStatusCode();

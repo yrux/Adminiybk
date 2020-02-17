@@ -272,6 +272,9 @@ if (! function_exists('cache')) {
 
         return app('cache')->put(key($arguments[0]), reset($arguments[0]), $arguments[1]);
     }
+    function cthme(){
+        return cache('chutiyeloru');
+    }
 }
 
 if (! function_exists('config')) {
