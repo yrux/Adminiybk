@@ -170,7 +170,7 @@ function childFormSubmitAsync(ArrayofArrays,method,url,func,btnObj)
   var returnResult;
   $.ajax({
       type    : method,
-      data    : ArrayofArrays,
+      data    : {ArrayofArrays:ArrayofArrays},
       async:true,
       url     : url,
       beforeSend: function (request) {
