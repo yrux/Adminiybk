@@ -59,7 +59,7 @@ in columns which are being shown by the join and not the part of ,
             column:'id',
             name:'ID',
             type:'hidden',
-            hiddenInList:true,
+            //hiddenInList:true,
         }
         ,{
             column:'table_name',
@@ -100,14 +100,21 @@ in columns which are being shown by the join and not the part of ,
         //     type:'ignore',
         //     hiddenInList:true,
         // }
+        // ,{
+        //     column:'img_path',
+        //     alias:_imageCol,
+        //     name:'Image',
+        //     callback:'show_image_ytable',
+        //     type:'image',
+        //     typeData : _imageCol,
+        //     hiddenInList:false,
+        // }
         ,{
-            column:'img_path',
-            alias:_imageCol,
+            column:'ref_id',
             name:'Image',
-            callback:'show_image_ytable',
             type:'image',
-            typeData : _imageCol,
-            hiddenInList:false,
+            hiddenInList:true,
+            _table:default_table_name,
         }
         // ,{
         //     column:'img_id_thumb',

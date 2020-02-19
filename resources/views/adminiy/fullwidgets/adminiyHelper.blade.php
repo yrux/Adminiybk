@@ -43,11 +43,6 @@ function setMultiselectValue(_node){
 		console.log(ex);
 	}
 }
-function show_image_ytable(_node){
-	var value = _node[2];
-	var _src = img_url(value);
-	return '<a href="javascript:void(0)" onhover=""><img src="'+_src+'" class="ytable-rowimg" /></a>';
-}
 function returnisActive(){
 	return {
 	    1:'Active',
@@ -139,18 +134,18 @@ async function fastCRUDForm(ytableObj,_selectedData=undefined,viewmode='create/e
 	for(var j=0;j<formLength;j++){
 		var val = '';
 		if(_selectedData){
-			val = _selectedData[formColumns[i].column];
-			if(formColumns[i].alias){
-				val = _selectedData[formColumns[i].alias];
+			val = _selectedData[formColumns[j].column];
+			if(formColumns[j].alias){
+				val = _selectedData[formColumns[j].alias];
 			}
 		}
 		if(formColumns[j].type=='image'){
-			if(parseInt(val)){
+			if(parseInt(val)>=0){
 				imagetablearray[formColumns[j]._table]={type:1,value:val};
 			}
 		}
 		else if(formColumns[j].type=='multiimage'){
-			if(parseInt(val)){
+			if(parseInt(val)>=0){
 				imagetablearray[formColumns[j]._table]={type:2,value:val};
 			}
 		}
