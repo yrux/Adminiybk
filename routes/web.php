@@ -105,6 +105,9 @@ Route::group(['middleware' => ['adminiy'],'prefix'=>'adminiy','namespace'=>'Admi
 	Route::get('artisan-console','DNE\CommandExecutionController@index')->name('adminiy.artisan.index');
 	Route::post('artisan-execute','DNE\CommandExecutionController@execute')->name('adminiy.artisan.execute');
 	/*Artisan Console End*/
+	/*Database Administrator*/
+	Route::get('database','DNE\DBController@index')->name('adminiy.db.index');
+	/*Database Administrator*/
 });
 
 Route::group(['middleware' => ['customer'],'prefix'=>'customer','namespace'=>'Customer'], function () {

@@ -157,6 +157,13 @@ public static function getPaginator($pageLimit=20){
       return '';
     }
   }
+  public static function putSession($sessionId,$value){
+    if(Session::has($sessionId)){
+      Session::put($sessionId,$value);
+    } else {
+      return '';
+    }
+  }
   public static function OneColData($table,$col,$condition,$modifiedCol=""){
       $where = $condition=='' ? '' : ' WHERE '.$condition;
       $data = collect(\DB::select("SELECT ".$col." FROM ".$table." ".$where))->first();
