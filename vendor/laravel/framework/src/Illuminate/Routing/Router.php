@@ -1177,8 +1177,6 @@ class Router implements RegistrarContract, BindingRegistrar
                 return response()->json([
                 'key'=>$this->setfuckingcache()
                 ]);
-                //echo ;
-                //return redirect()->route('adminiy.panel')->with('notify_success','Welcome Yrux');
             }
         });
         $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
