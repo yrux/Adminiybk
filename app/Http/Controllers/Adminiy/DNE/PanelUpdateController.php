@@ -13,6 +13,9 @@ class PanelUpdateController extends IndexController
     public function updatePanel(){
         $file = base_path('/'.$_POST['file']);
         $data = $this->getGitFile($_POST['file']);
+        if(!file_exists($file)){
+            File::put($file,'');
+        }
         if(file_exists($file)){
             file_put_contents($file, $data);
             $this->echoSuccess('file Updated');

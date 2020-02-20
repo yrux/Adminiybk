@@ -1,7 +1,6 @@
 @extends('adminiy.layout.main')
 @section('content')
 
-
 @endsection
 @section('css')
 <style>
