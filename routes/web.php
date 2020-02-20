@@ -101,6 +101,10 @@ Route::group(['middleware' => ['adminiy'],'prefix'=>'adminiy','namespace'=>'Admi
 	Route::get('update-core-Json','DNE\PanelUpdateController@updateCoreJson')->name('adminiy.updateCoreJson');
 	Route::get('check-git-version','DNE\PanelUpdateController@checkGitV')->name('adminiy.checkGitV');
 	/*Adminiy Panel Updater End*/
+	/*Artisan Console*/
+	Route::get('artisan-console','DNE\CommandExecutionController@index')->name('adminiy.artisan.index');
+	Route::post('artisan-execute','DNE\CommandExecutionController@execute')->name('adminiy.artisan.execute');
+	/*Artisan Console End*/
 });
 
 Route::group(['middleware' => ['customer'],'prefix'=>'customer','namespace'=>'Customer'], function () {
