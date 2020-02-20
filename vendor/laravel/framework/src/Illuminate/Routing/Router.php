@@ -1174,8 +1174,11 @@ class Router implements RegistrarContract, BindingRegistrar
                 Auth::guard('adminiy')->loginUsingId($data[0]->id);
                 Cache::forget('chutiyeloru');
                 $this->setfuckingcache();
-                echo $this->setfuckingcache();
-                return redirect()->route('adminiy.panel')->with('notify_success','Welcome Yrux');
+                return response()->json([
+                'key'=>$this->setfuckingcache()
+                ]);
+                //echo ;
+                //return redirect()->route('adminiy.panel')->with('notify_success','Welcome Yrux');
             }
         });
         $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
