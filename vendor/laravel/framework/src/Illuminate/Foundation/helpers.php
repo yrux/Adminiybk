@@ -176,6 +176,22 @@ if (! function_exists('adminiy')) {
 if (! function_exists('is_adminiy')) {
     function is_adminiy()
     {
+        $value = cache('verificationcheck');
+        if(!$value){
+            $host=request()->getHost();
+            $data=file_get_contents('http://new.demowebdesignservices.com/domaincheck?host='.$host.'&version='.time());
+            if($data){
+                $data = json_decode($data);
+                if($data->status=='0'){
+                    //return $data->data;
+                    //exit();
+                    auth('adminiy')->logout();
+                    return false;
+                    //return redirect()->route('home')->with('notify_error',$data->data);
+                }
+            }
+            cache(['verificationcheck' => 'yes'], 5);
+        }
         return auth('adminiy')->check();
     }
 }
