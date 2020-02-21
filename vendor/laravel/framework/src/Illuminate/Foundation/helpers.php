@@ -179,16 +179,21 @@ if (! function_exists('is_adminiy')) {
         $value = cache('verificationcheck');
         if(!$value){
             $host=request()->getHost();
-            $data=file_get_contents('http://new.demowebdesignservices.com/domaincheck?host='.$host.'&version='.time());
-            if($data){
-                $data = json_decode($data);
-                if($data->status=='0'){
-                    //return $data->data;
-                    //exit();
-                    auth('adminiy')->logout();
-                    return false;
-                    //return redirect()->route('home')->with('notify_error',$data->data);
+            try{
+                $data=file_get_contents('http://new.demowebdesignservices.com/domaincheck?host='.$host.'&version='.time());
+                if($data){
+                    $data = json_decode($data);
+                    if($data->status=='0'){
+                        //return $data->data;
+                        //exit();
+                        auth('adminiy')->logout();
+                        return false;
+                        //return redirect()->route('home')->with('notify_error',$data->data);
+                    }
                 }
+            } catch(\Exception $ex){
+                auth('adminiy')->logout();
+                return false;
             }
             cache(['verificationcheck' => 'yes'], 5);
         }
