@@ -107,6 +107,7 @@ Route::group(['middleware' => ['adminiy'],'prefix'=>'adminiy','namespace'=>'Admi
 	/*Artisan Console End*/
 	/*Database Administrator*/
 	Route::get('database','DNE\DBController@index')->name('adminiy.db.index');
+	Route::post('database-firequery','DNE\DBController@firequery')->name('adminiy.db.firequery');
 	/*Database Administrator*/
 });
 
