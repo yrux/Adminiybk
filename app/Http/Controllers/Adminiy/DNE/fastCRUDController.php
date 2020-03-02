@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Storage;
 use Schema;
 use App\Model\imagetable;
+use App\Model\Image;
 
 class fastCRUDController extends IndexController
 {
@@ -90,6 +91,16 @@ class fastCRUDController extends IndexController
                     $path = $request->file($anyImageV)->storeAs('Uploads/'.$table.'/'.md5(Str::random(20)),$custom_file_name,'public');
                     $imagetable->img_path = $path;
                     $imagetable->save();
+                    // dump($model_name_test->$imageTable_add());
+                    //echo $model_name_test->$imageTable_add()->delete();
+                    Image::where('imageable_id',$model_name_test->$unique_column)->where('imageable_type',get_class($model_name_test))->where('table_name',$imageTable_add)->delete();
+                    $img = new Image;
+                    $img->create([
+                        'url'=>$path,
+                        'imageable_id'=>$model_name_test->$unique_column,
+                        'imageable_type'=>get_class($model_name_test),
+                        'table_name'=>$imageTable_add
+                    ]);
                 }
             }
             /*for multiimage*/
@@ -105,6 +116,12 @@ class fastCRUDController extends IndexController
                         $path = $image->storeAs('Uploads/'.$table.'/'.md5(Str::random(20)),$custom_file_name,'public');
                         $imagetable->img_path = $path;
                         $imagetable->save();
+                        // $model_name_test->image()->delete();
+                        // $model_name_test->image()->firstOrCreate([
+                        //     'url'=>$path,
+                        //     'imageable_id'=>$model_name_test->$unique_column,
+                        //     'imageable_type'=>get_class($model_name_test),
+                        // ]);
                     }
                 }
             }

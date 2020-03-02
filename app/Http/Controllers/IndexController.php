@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use App\Http\Requests\yTableinquiryRequest;
 use App\Http\Requests\yTablecareerRequest;
 use App\Model\inquiry;
+use App\Model\m_flag;
 
 class IndexController extends Controller
 {
@@ -18,6 +19,8 @@ class IndexController extends Controller
     }
     public function index()
     {
+        $m_flag = m_flag::find(1965);
+        dd($m_flag->m_flag_main,$m_flag->m_flag_thumb);
         // $banners = Helper::fireQuery("select banner_management.*
         //     ,img_1.img_path as img_1_img
         //     ,img_2.img_path as img_2_img from banner_management 

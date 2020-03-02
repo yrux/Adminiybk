@@ -111,6 +111,19 @@ in columns which are being shown by the join and not the part of ,
         //     type:'ignore',
         //     hiddenInList:true,
         // }
+        // ,{
+        //     column:'id',
+        //     name:'Image',
+        //     type:'image',
+        //     hiddenInList:true,
+        //     _table:'m_flag_main',
+        // },{
+        //     column:'id',
+        //     name:'Image thumb',
+        //     type:'image',
+        //     hiddenInList:true,
+        //     _table:'m_flag_thumb',
+        // }
         ,{
             column:'is_active',
             name:'Is Active?',
