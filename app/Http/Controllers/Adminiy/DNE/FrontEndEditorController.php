@@ -76,11 +76,15 @@ class FrontEndEditorController extends IndexController
                 $imageSavefooter='';
             } else {
                 $imagetable=imagetable::where('table_name',$data[0])->first();
-                if(!$imagetable){
-                    $imagetable = new imagetable;
-                } else {
-                    $imagetable = imagetable::find($imagetable->id);
+                if($imagetable){
+                    $imageid=$imagetable->id;
+                    try {
+                        $imagetable=imagetable::where('table_name',$data[0])->delete();
+                        app("App\Http\Controllers\Adminiy\DNE\CoreDeletesController")->deleteResizedImage($imageid);
+                    }catch(\Exception $ex){
+                    }
                 }
+                $imagetable = new imagetable;
                 $imagetable->table_name=$data[0];
                 $imagetable->ref_id=0;
                 $imagetable->type=1;
