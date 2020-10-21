@@ -31,7 +31,7 @@
 </ul>
 </nav>
 @if($listingData->fast_crud=='1')
-<div class="modal fade" data-backdrop="static" id="ytable-FastCRUD" tabindex="-1" style="display: none;" aria-hidden="true">
+<div class="modal fade" data-backdrop="static" id="ytable-FastCRUD" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">

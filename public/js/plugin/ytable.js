@@ -314,8 +314,8 @@ class ytable {
       clearInterval(this.searchStop);
     },250,_limit);
   }
-  resetyTableBuffer(_limit){
-    this.page=0;
+  resetyTableBuffer(_limit,__page=0){
+    this.page=__page;
     this.pageLimit=_limit;
     var que = this;
     return new Promise(function(resolve, reject) {

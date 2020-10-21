@@ -63,7 +63,7 @@ function ytableCrudCB(res){
 		if(res.status){
 			$('#ytable-FastCRUD').modal('hide');
 			notify('3',res.data);
-			ytabled.resetyTableBuffer(ytabled.pageLimit).then(q=>{
+			ytabled.resetyTableBuffer(ytabled.pageLimit,ytabled.page).then(q=>{
 				shakeTable();
 				return q;
 			}).then(q=>{
@@ -721,6 +721,7 @@ var generateSlug = (inputname,obj)=>{
     $('input[name="'+inputname+'"]').val(_val.toLowerCase());
 }
 var initializeCkeditor = ()=>{
+	CKEDITOR.config.removePlugins='easyimage';
 	var _wyswigs = document.getElementsByClassName('fastCRUD_wyswig');
 	var roxyFileman = '{{asset('admin/vendors/ckeditor/fileman/index.html')}}';
 	for(var i =0;i<_wyswigs.length;i++){
