@@ -19,8 +19,8 @@ class IndexController extends Controller
     }
     public function index()
     {
-        $m_flag = m_flag::find(1965);
-        dd($m_flag->m_flag_main,$m_flag->m_flag_thumb);
+        // $m_flag = m_flag::find(1965);
+        // dd($m_flag->m_flag_main,$m_flag->m_flag_thumb);
         // $banners = Helper::fireQuery("select banner_management.*
         //     ,img_1.img_path as img_1_img
         //     ,img_2.img_path as img_2_img from banner_management 
