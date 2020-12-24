@@ -40,21 +40,21 @@ if($(this).data('key')){
 $('#img_href_admin').show();
 $('#img_css_admin').html('');
 if($(this).data('table')){
-	$('#img_href_admin').hide();
+  $('#img_href_admin').hide();
 }
 $('#imagehref').val('');
 var appender = '';
 if($(this).data('imgid')){
   //updateCustomFieldOne(updateCol,key,table,updateAgainst,updateValue)
   if(!$(this).data('table')){
-	  appender+="<li><a onclick='updateCustomFieldOne(\"is_active_img\","+$(this).data('imgid')+",\"imagetable\",\"id\",0)' href='javascript:void(0)'>Hide Image</a></li>";
-	  appender+="<li><a onclick='updateCustomFieldOne(\"is_active_img\","+$(this).data('imgid')+",\"imagetable\",\"id\",1)' href='javascript:void(0)'>Show Image</a></li>";
+    appender+="<li><a onclick='updateCustomFieldOne(\"is_active_img\","+$(this).data('imgid')+",\"imagetable\",\"id\",0)' href='javascript:void(0)'>Hide Image</a></li>";
+    appender+="<li><a onclick='updateCustomFieldOne(\"is_active_img\","+$(this).data('imgid')+",\"imagetable\",\"id\",1)' href='javascript:void(0)'>Show Image</a></li>";
   }
 }
 if($(this).data('table')){
-	appender+="<li><a onclick='uploadImageInlineTable(this);' data-key='"+$(this).data('key')+"' data-width='"+$(this).data('width')+"' data-height='"+$(this).data('height')+"' data-refid='"+$(this).data('ref_id')+"' data-table='"+$(this).data('table')+"' href='javascript:void(0)'>Update Image</a></li>";
+  appender+="<li><a onclick='uploadImageInlineTable(this);' data-key='"+$(this).data('key')+"' data-width='"+$(this).data('width')+"' data-height='"+$(this).data('height')+"' data-refid='"+$(this).data('ref_id')+"' data-table='"+$(this).data('table')+"' href='javascript:void(0)'>Update Image</a></li>";
 } else {
-	appender+="<li><a onclick='uploadImageInline(this);' data-key='"+$(this).data('key')+"' data-width='"+$(this).data('width')+"' data-height='"+$(this).data('height')+"' href='javascript:void(0)'>Update Image</a></li>";
+  appender+="<li><a onclick='uploadImageInline(this);' data-key='"+$(this).data('key')+"' data-width='"+$(this).data('width')+"' data-height='"+$(this).data('height')+"' href='javascript:void(0)'>Update Image</a></li>";
 }
 $("<ul class='custom-menu list-unstyled'>"+appender+"</ul>")
 .appendTo("body")
@@ -91,14 +91,14 @@ $('body').on('focus', '[contenteditable]', function() {
       $('#yruxcontentEditorkey').val($this.data('update'));
       $('#yruxcontentEditor').modal('toggle');
       CKEDITOR.instances['yruxcontentEditorta'].setData($this.html())
-	  $('#normalEditor').show();
-	  $('#tableEditor').hide();
-	  if($this.data('table')){
-		$('#normalEditor').hide();
-		$('#tableEditor').attr('data-table',$this.data('table'));
-		$('#tableEditor').attr('data-col',$this.data('col'));
-		$('#tableEditor').show();
-	  }
+    $('#normalEditor').show();
+    $('#tableEditor').hide();
+    if($this.data('table')){
+    $('#normalEditor').hide();
+    $('#tableEditor').attr('data-table',$this.data('table'));
+    $('#tableEditor').attr('data-col',$this.data('col'));
+    $('#tableEditor').show();
+    }
     }
     $(this).attr('data-before', $this.html());
     return $this;
@@ -113,13 +113,13 @@ $('body').on('focus', '[contenteditable]', function() {
           generateNotification('error','Can not set data to empty');
           return false;
         }
-		if($this.data('table')){
-			childFormSubmitAsync([$this.data('col'),key,$this.data('table'),'id',$this.html()],'POST',$('#web_base_url').val()+'/adminiy/statusAjaxUpdateCustom',(a,b)=>{
-				generateNotification('success','Content Updated');
-			},'');
-		} else {
-			updateContet(key,$this.html());
-		}
+    if($this.data('table')){
+      childFormSubmitAsync([$this.data('col'),key,$this.data('table'),'id',$this.html()],'POST',$('#web_base_url').val()+'/adminiy/statusAjaxUpdateCustom',(a,b)=>{
+        generateNotification('success','Content Updated');
+      },'');
+    } else {
+      updateContet(key,$this.html());
+    }
         // var url = $('#base_url').val()+'/adminiy/updateFlagOnKey';
         //var url = '{{url('/adminiy/updateFlagOnKey')}}';
         // childFormSubmitAsync(keyArray,'POST',url,contentEditAft,$this);
@@ -199,20 +199,49 @@ function contentEditAft(data,obj){
     $("[data-update='"+obj[0]+"']").html(obj[1]);
   }
 }
-function updateContet(key,value){
-   var keyArray = [];
-  keyArray.push(key);
- keyArray.push(value);
- var url = $('#web_base_url').val()+'/adminiy/updateFlagOnKey';
- childFormSubmitAsync(keyArray,'POST',url,contentEditAft,keyArray);
+function ajaxifyWojson(d,m,u){
+  if(typeof d !='string'){
+    d = $.param(d);
+  }
+  return new Promise(function(resolve, reject) {
+    var xhhtp = new XMLHttpRequest();
+    xhhtp.onreadystatechange = function() {
+      if (this.status == 200&&this.readyState==4){
+        resolve(xhhtp.responseText);
+      } else if(this.status==404){
+        reject(Error('Error occured'));
+      }
+    };
+    xhhtp.onload = function () {
+        
+    };
+    xhhtp.open(m, u, true);
+    xhhtp.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+    xhhtp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    try {
+      xhhtp.send(d)
+    }catch(ex){
+      reject(Error('Error occured'));
+    }
+  });
+}
+async function updateContet(key,value){
+    var keyArray = [];
+    keyArray.push(key);
+    keyArray.push(value.trim());
+    var url = $('#web_base_url').val()+'/adminiy/updateFlagOnKey';
+    await ajaxifyWojson({ArrayofArrays:keyArray},'POST',url);
+    generateNotification('success','Content Edited');
+    $("[data-update='"+key[0]+"']").html(key);
+    //childFormSubmitAsync(keyArray,'POST',url,contentEditAft,keyArray);
 }
 function uploadImageInlineTable(obj){
-	$('#adminuploadImage').modal('toggle');
-	$('#normal_admin_ajax_image_upload').show();
-	$('#adminuploadAjaxInput').val($(obj).data('key')+'|'+$(obj).data('table')+'|'+$(obj).data('refid'));
-	$('#msgIndicator').html('<div class="alert alert-info"><strong>Info!</strong> Default Height of image you are uploading is <b>'+$(obj).data('height')+'</b> and width is <b>'+$(obj).data('width')+'</b>. However you can change them from the inputs we provided below</div>');
-	$('#imageinlinewidth').val($(obj).data('width'));
-	$('#imageinlineheight').val($(obj).data('height'));
+  $('#adminuploadImage').modal('toggle');
+  $('#normal_admin_ajax_image_upload').show();
+  $('#adminuploadAjaxInput').val($(obj).data('key')+'|'+$(obj).data('table')+'|'+$(obj).data('refid'));
+  $('#msgIndicator').html('<div class="alert alert-info"><strong>Info!</strong> Default Height of image you are uploading is <b>'+$(obj).data('height')+'</b> and width is <b>'+$(obj).data('width')+'</b>. However you can change them from the inputs we provided below</div>');
+  $('#imageinlinewidth').val($(obj).data('width'));
+  $('#imageinlineheight').val($(obj).data('height'));
 }
 function uploadImageInline(obj){
   var $this = $(this);
@@ -274,9 +303,9 @@ const updatingAnchor = ()=>{
    },keyArray);
 }
 const updatePageContent = (_key,_data,obj)=>{
-	console.log(_key,_data,obj);
-	childFormSubmitAsync([$(obj).data('col'),_key,$(obj).data('table'),'id',_data],'POST',$('#web_base_url').val()+'/adminiy/statusAjaxUpdateCustom',(a,b)=>{
-		$("div[data-update='"+_key+"']").html(_data);
-		generateNotification('success','Content Updated');
-	},[_key,_data,obj]);
+  console.log(_key,_data,obj);
+  childFormSubmitAsync([$(obj).data('col'),_key,$(obj).data('table'),'id',_data],'POST',$('#web_base_url').val()+'/adminiy/statusAjaxUpdateCustom',(a,b)=>{
+    $("div[data-update='"+_key+"']").html(_data);
+    generateNotification('success','Content Updated');
+  },[_key,_data,obj]);
 }
