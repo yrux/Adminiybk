@@ -1,205 +1,53 @@
-function updateCustomFieldOne(updateCol,key,table,updateAgainst,updateValue){
-var keyArray = [];
-keyArray.push(updateCol);
-keyArray.push(key);
-keyArray.push(table);
-keyArray.push(updateAgainst);
-keyArray.push(updateValue);
-var path = $('#web_base_url').val()+'/adminiy/statusAjaxUpdateCustom';
-childFormSubmitAsync(keyArray,'POST',path,fireNotify,'');
-}
-$(document).ready(function(){
-
-/*MULTIPLE CONTENT START*/
-$('.contentEditBtn').click(function(){
-var key  = $(this).data("update-key");
-var counter = $(this).data("counter");
-var keyArray = [];
-keyArray.push('flag_value');
-keyArray.push(key);
-keyArray.push('m_flag');
-keyArray.push('flag_type');
-if($(this).html()=='Add'){
-keyArray.push(counter+1);
-}
-if($(this).html()=='Less'){
-keyArray.push(counter-1);
-}
-var path = $('#web_base_url').val()+'/adminiy/statusAjaxUpdateCustom';
-childFormSubmitAsync(keyArray,'POST',path,fireNotify,'');
-});
-/*MULTIPLE CONTENT END*/
-/*IMAGE UPDATE START*/
-$('img').bind("contextmenu", function(event) {
-$('.custom-menu').remove();
-event.preventDefault();
-if($(this).data('key')){
-} else {
-  return false;
-}
-$('#img_href_admin').show();
-$('#img_css_admin').html('');
-if($(this).data('table')){
-  $('#img_href_admin').hide();
-}
-$('#imagehref').val('');
-var appender = '';
-if($(this).data('imgid')){
-  //updateCustomFieldOne(updateCol,key,table,updateAgainst,updateValue)
-  if(!$(this).data('table')){
-    appender+="<li><a onclick='updateCustomFieldOne(\"is_active_img\","+$(this).data('imgid')+",\"imagetable\",\"id\",0)' href='javascript:void(0)'>Hide Image</a></li>";
-    appender+="<li><a onclick='updateCustomFieldOne(\"is_active_img\","+$(this).data('imgid')+",\"imagetable\",\"id\",1)' href='javascript:void(0)'>Show Image</a></li>";
+function _uri(base_url){
+  return (appender='')=>{
+  if(appender==''){
+    return base_url;
+    }
+    return base_url+'/'+appender;
   }
 }
-if($(this).data('table')){
-  appender+="<li><a onclick='uploadImageInlineTable(this);' data-key='"+$(this).data('key')+"' data-width='"+$(this).data('width')+"' data-height='"+$(this).data('height')+"' data-refid='"+$(this).data('ref_id')+"' data-table='"+$(this).data('table')+"' href='javascript:void(0)'>Update Image</a></li>";
-} else {
-  appender+="<li><a onclick='uploadImageInline(this);' data-key='"+$(this).data('key')+"' data-width='"+$(this).data('width')+"' data-height='"+$(this).data('height')+"' href='javascript:void(0)'>Update Image</a></li>";
-}
-$("<ul class='custom-menu list-unstyled'>"+appender+"</ul>")
-.appendTo("body")
-.css({top: event.pageY + "px", left: event.pageX + "px"});
-}).bind("click", function(event) {
-$(".custom-menu").remove();
-});
-$('html').click(function() {
-  $(".custom-menu").remove();
-});
-/*IMAGE UPDATE END*/
-/*Anchor Update*/
-$('a[data-anchorupdate="true"]').bind("contextmenu", function(event) {
-$('.custom-menu').remove();
-event.preventDefault();
-if($(this).data('update')){
-} else {
-  return false;
-}
-let _key = $(this).data('update');
-var appender = '';
-  appender+='<li><a onclick="updateAnchor(\''+_key+'\')" href="javascript:void(0)">Link Manager</a></li>';
-$('<ul class="custom-menu list-unstyled">'+appender+'</ul>').appendTo("body")
-.css({top: event.pageY + "px", left: event.pageX + "px"});
-}).bind("click", function(event) {
-$(".custom-menu").remove();
-});
-/*Anchor Update End*/
-/*CONTENT UPDATE START*/
-$('body').on('focus', '[contenteditable]', function() {
-    var $this = $(this);
-    //console.log($this.html());
-    if($(this).attr('data-ckeditor')=='true'){
-      $('#yruxcontentEditorkey').val($this.data('update'));
-      $('#yruxcontentEditor').modal('toggle');
-      CKEDITOR.instances['yruxcontentEditorta'].setData($this.html())
-    $('#normalEditor').show();
-    $('#tableEditor').hide();
-    if($this.data('table')){
-    $('#normalEditor').hide();
-    $('#tableEditor').attr('data-table',$this.data('table'));
-    $('#tableEditor').attr('data-col',$this.data('col'));
-    $('#tableEditor').show();
-    }
-    }
-    $(this).attr('data-before', $this.html());
-    return $this;
-}).on('blur paste', '[contenteditable]', function() {
-  var $this = $(this);
-    if ($this.data('before') !== $this.html()) {
-        $this.data('before', $this.html());
-        var key = $this.data('update');
-        if($this.html()==""){
-          $this.html($this.attr('data-before'));
-          $this.attr('data-before',$this.attr('data-before'));
-          generateNotification('error','Can not set data to empty');
-          return false;
+var _webbase = document.getElementById('web_base_url')?document.getElementById('web_base_url'):document.getElementById('base_url');
+var base_url = _uri(_webbase.value);
+var img_url = _uri(base_url(''));
+var dimg_url = _uri(base_url('images'));
+var yruxifyA  = new XMLHttpRequest();
+/*
+Usage
+  console.log(base_url(),
+  img_url(),
+  dimg_url());
+*/
+function ajaxify(d,m,u){
+  if(typeof d !='string'){
+    d = $.param(d);
+  }
+  return new Promise(function(resolve, reject) {
+    //yruxifyA = new XMLHttpRequest();
+    yruxifyA.onreadystatechange = function() {
+      if (this.status == 200&&this.readyState==4){
+        if(!isJSON(yruxifyA.responseText)){
+          throw 'Result is not in JSON format';
+        } else {
+          resolve(JSON.parse(yruxifyA.responseText));
         }
-    if($this.data('table')){
-      childFormSubmitAsync([$this.data('col'),key,$this.data('table'),'id',$this.html()],'POST',$('#web_base_url').val()+'/adminiy/statusAjaxUpdateCustom',(a,b)=>{
-        generateNotification('success','Content Updated');
-      },'');
-    } else {
-      updateContet(key,$this.html());
+      } else if(this.status==404){
+        reject(Error('Error occured'));
+      }
+    };
+    yruxifyA.onload = function () {
+        
+    };
+    yruxifyA.open(m, u, true);
+    yruxifyA.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+    yruxifyA.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    try {
+      yruxifyA.send(d)
+    }catch(ex){
+      reject(Error('Error occured'));
     }
-        // var url = $('#base_url').val()+'/adminiy/updateFlagOnKey';
-        //var url = '{{url('/adminiy/updateFlagOnKey')}}';
-        // childFormSubmitAsync(keyArray,'POST',url,contentEditAft,$this);
-    }
-    return $this;
-});
-$('body').on('dblclick', '[contentbackground]', function() {
-    var $this = $(this);
-    $('#adminuploadImage').modal('toggle');
-    $('#img_href_admin').hide();
-    $('#imagehref').val('');
-    $('#img_css_admin').html('');
-    // $('#adminuploadAjaxInput').val($this.data('key')+'|'+$this.data('width')+'|'+$this.data('height'));
-    $('#adminuploadAjaxInput').val($this.data('key'));
-  $('#msgIndicator').html('<div class="alert alert-info"><strong>Info!</strong> Default Height of image you are uploading is <b>'+$this.data('height')+'</b> and width is <b>'+$this.data('width')+'</b>. However you can change them from the inputs we provided below</div>');
-  $('#imageinlinewidth').val($this.data('width'));
-  $('#imageinlineheight').val($this.data('height'));
-});
-//CKEDITOR.replace('yruxcontentEditorta');
-// CKEDITOR.replace('yruxcontentEditorta', {
-//     contentsCss : $('#mystylesheet').val()
-// });
-CKEDITOR.replace( 'yruxcontentEditorta',{filebrowserBrowseUrl:$('#roxyFile').val(),
-                                filebrowserImageBrowseUrl:$('#roxyFile').val()+'?type=image',
-                                contentsCss : $('#mystylesheet').val(),
-                                removeDialogTabs: 'link:upload;image:upload'});
-CKEDITOR.config.contentsCss = $('#mystylesheet').val(); 
-$.fn.modal.Constructor.prototype.enforceFocus = function() {
-  modal_this = this
-  $(document).on('focusin.modal', function (e) {
-    if (modal_this.$element[0] !== e.target && !modal_this.$element.has(e.target).length 
-    && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_select') 
-    && !$(e.target.parentNode).hasClass('cke_dialog_ui_input_text')) {
-      modal_this.$element.focus()
-    }
-  })
-};
-
-/*Image Upload On Change*/
-$('#adminuploadAjax').change(function(){
-  var _URL = window.URL || window.webkitURL;
-var image, file;
-if ((file = this.files[0])) {
-  image = new Image();
-  image.onload = function() {
-    var imgwidth = this.width;
-    var imgheight = this.height;
-  };
-  image.src = _URL.createObjectURL(file);
+  });
 }
-});
-/*CONTENT UPDATE END*/
-
-});
-/*STATUS UPDATING*/
-function fireNotify(data,obj){
-  generateNotification('success','Content Added');
-  ReloadPage();
-}
-function updateStatusIfActive(id,updatedId,updatedAgainst,curStatus,table){
-        var keyArray = [];
-        keyArray.push(id);
-        keyArray.push(updateId);
-        keyArray.push(table);
-        keyArray.push(updatedAgainst);
-        keyArray.push(curStatus);
-        var path = $('#web_base_url').val()+'/adminiy/statusAjaxUpdate';
-        childFormSubmitAsync(keyArray,'POST',path,statusUpdateAft,obj)
-}
-function statusUpdateAft(data,obj){
-         generateNotification('success','Status Updated');
-}
-/*END STATUS UPDATING*/
-function contentEditAft(data,obj){
-  if(data=='success'){
-    generateNotification('success','Content Edited');
-    $("[data-update='"+obj[0]+"']").html(obj[1]);
-  }
-}
-function ajaxifyWojson(d,m,u){
+function ajaxifyN(d,m,u){
   if(typeof d !='string'){
     d = $.param(d);
   }
@@ -207,7 +55,11 @@ function ajaxifyWojson(d,m,u){
     var xhhtp = new XMLHttpRequest();
     xhhtp.onreadystatechange = function() {
       if (this.status == 200&&this.readyState==4){
-        resolve(xhhtp.responseText);
+        if(!isJSON(xhhtp.responseText)){
+          throw 'Result is not in JSON format';
+        } else {
+          resolve(JSON.parse(xhhtp.responseText));
+        }
       } else if(this.status==404){
         reject(Error('Error occured'));
       }
@@ -225,87 +77,169 @@ function ajaxifyWojson(d,m,u){
     }
   });
 }
-async function updateContet(key,value){
-    var keyArray = [];
-    keyArray.push(key);
-    keyArray.push(value.trim());
-    var url = $('#web_base_url').val()+'/adminiy/updateFlagOnKey';
-    await ajaxifyWojson({ArrayofArrays:keyArray},'POST',url);
-    generateNotification('success','Content Edited');
-    $("[data-update='"+key[0]+"']").html(key);
-    //childFormSubmitAsync(keyArray,'POST',url,contentEditAft,keyArray);
-}
-function uploadImageInlineTable(obj){
-  $('#adminuploadImage').modal('toggle');
-  $('#normal_admin_ajax_image_upload').show();
-  $('#adminuploadAjaxInput').val($(obj).data('key')+'|'+$(obj).data('table')+'|'+$(obj).data('refid'));
-  $('#msgIndicator').html('<div class="alert alert-info"><strong>Info!</strong> Default Height of image you are uploading is <b>'+$(obj).data('height')+'</b> and width is <b>'+$(obj).data('width')+'</b>. However you can change them from the inputs we provided below</div>');
-  $('#imageinlinewidth').val($(obj).data('width'));
-  $('#imageinlineheight').val($(obj).data('height'));
-}
-function uploadImageInline(obj){
-  var $this = $(this);
-  $('#adminuploadImage').modal('toggle');
-  $('#normal_admin_ajax_image_upload').show();
-  //$('#adminuploadAjaxInput').val($(obj).data('key')+'|'+$(obj).data('width')+'|'+$(obj).data('height'));
-  $('#adminuploadAjaxInput').val($(obj).data('key'));
-  $('#msgIndicator').html('<div class="alert alert-info"><strong>Info!</strong> Default Height of image you are uploading is <b>'+$(obj).data('height')+'</b> and width is <b>'+$(obj).data('width')+'</b>. However you can change them from the inputs we provided below</div>');
-  $('#imageinlinewidth').val($(obj).data('width'));
-  $('#imageinlineheight').val($(obj).data('height'));
-}
-function UploadFile(id,obj){
-var path = $('#web_base_url').val()+'/adminiy/imageUpload';
-data = new FormData();
-data.append('file', $('#'+id)[0].files[0]);
-data.append('id',obj);
-data.append('href',$('#imagehref').val());
-$.ajax({
-type    : 'POST',
-data    : data,
-async: true,
-contentType: false,
-processData: false,
-url     : path,
-beforeSend: function (request) {
-return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
-},
-success: function (result) {
-generateNotification('success','Image Uploaded Successfully');
-ReloadPage();
-//$('.changeImage').attr('src',$('#autoLink').val()+result);
-},
-error:function (error) {
-generateNotification('error','Could not upload please try again');
-}
-});
-}
-const updateAnchor = (_flgid)=>{
-  $('#anchorModal').modal('show');
-  let anc = $('a[data-update="'+_flgid+'"]');
-  document.getElementById('anchor_key_admin_ajax').value = _flgid;
-  document.getElementById('anchor_link_admin_ajax').value = $(anc).attr('href')?$(anc).attr('href'):'#';
-  document.getElementById('anchor_name_admin_ajax').value = $(anc).text();
-}
-const updatingAnchor = ()=>{
-  let  key = document.getElementById('anchor_key_admin_ajax').value;
-  let  link = document.getElementById('anchor_link_admin_ajax').value;
-  let  name = document.getElementById('anchor_name_admin_ajax').value;
-    var keyArray = [];
-    keyArray.push(key);
-   keyArray.push([name,link]);
-   var url = $('#web_base_url').val()+'/adminiy/updateFlagOnKey';
-   childFormSubmitAsync(keyArray,'POST',url,(a,b)=>{
-    if(a=='success'){
-     ReloadPage();
-    } else {
-      generateNotification('error','Some Error occured');
+function isJSON(json) {
+  try {
+    var obj = JSON.parse(json)
+    if (obj && typeof obj === 'object' && obj !== null) {
+      return true
     }
-   },keyArray);
+  } catch (err) {}
+  return false
 }
-const updatePageContent = (_key,_data,obj)=>{
-  console.log(_key,_data,obj);
-  childFormSubmitAsync([$(obj).data('col'),_key,$(obj).data('table'),'id',_data],'POST',$('#web_base_url').val()+'/adminiy/statusAjaxUpdateCustom',(a,b)=>{
-    $("div[data-update='"+_key+"']").html(_data);
-    generateNotification('success','Content Updated');
-  },[_key,_data,obj]);
+function recallajax(){
+    $(document).on('submit', '#CrudForm,.CrudForm', function() {
+      var _thisForm = $(this);
+      if(!$(this).data('nosubmit')){
+        var submitBtn = $("input[type=submit]",$(this));
+        submitBtn.hide();
+        var parentDiv = submitBtn.parent();
+        if(!$('#loaderBtn').length>0){
+          parentDiv.append('<button id="loaderBtn" class="btn btn-success pull-right"><i class="fa fa-circle-o-notch fa-spin"></i></button>');
+        }
+      }
+      var validationAllowed = true;
+      var seconds = new Date().getTime() / 1000;
+      var formData = new FormData($(this)[0]);
+      if (typeof validateCrudForm == 'function') {
+        validationAllowed = validateCrudForm();
+        }else{}
+      if(!validationAllowed){
+        notify('0','Validation Error');
+        return false;
+      }
+      //if (typeof beforeSubmit == 'function') {beforeSubmit();}else{}
+      $.ajax({
+      type    : $(this).attr('method'),
+      data    : formData,
+      async: true,
+      contentType: false,
+      processData: false,
+      url     : $(this).attr('action'),
+      beforeSend: function (request) {
+      if (typeof beforeSubmit == 'function') {beforeSubmit();}else{}
+      return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+      },
+      success: function (result) {
+        if(!_thisForm.data('nosubmit')){
+          submitBtn.show();
+        }
+        $('#loaderBtn').remove();
+        if(!_thisForm.attr('data-noinfo')){
+          notify('2',result);
+        //$('#CrudForm')[0].reset();
+          $("html, body").animate({ scrollTop: 0 }, "slow");
+         }
+         seconds = new Date().getTime() / 1000;
+         if (_thisForm.attr('data-customcallback')){
+           var _func = _thisForm.attr('data-customcallback');
+          if ( eval("typeof "+_func+" === 'function'") ){
+            eval(_func + '(' + result + ')');
+          }
+         } else {
+          if (typeof afterSubmit == 'function') {afterSubmit();}else{}
+          if (typeof afterSubmitResult == 'function') {afterSubmitResult(result);}else{}
+         }
+      },
+      error:function (error) {
+        if(!_thisForm.attr('data-noinfo')){
+          notify('0','Some Error Occured');
+        }
+        if(!_thisForm.data('nosubmit')){
+          submitBtn.show();
+        }
+        if (_thisForm.attr('data-customcallbackFail')){
+           var _func = _thisForm.attr('data-customcallbackFail');
+          if ( eval("typeof "+_func+" === 'function'") ){
+            window[_func](error.responseText)
+            //eval(_func + '(' + error + ')');
+          }
+         } else {
+          if (typeof afterSubmitFail == 'function') {afterSubmitFail();}else{}
+          if (typeof afterSubmitResultFail == 'function') {afterSubmitResultFail(error.responseText);}else{}
+         }
+        $('#loaderBtn').remove();       
+        //$("html, body").animate({ scrollTop: 0 }, "slow");
+         seconds = new Date().getTime() / 1000;
+      }
+      });
+      return false;
+  });
 }
+function childFormSubmitAsync(ArrayofArrays,method,url,func,btnObj)
+{
+  var returnResult;
+  $.ajax({
+      type    : method,
+      data    : {ArrayofArrays:ArrayofArrays},
+      async:true,
+      url     : url,
+      beforeSend: function (request) {
+      return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+      },
+      success: function (result) {
+        func(result,btnObj);
+      },
+      error:function (error) {
+        try { showError('msg','Some Error Occured'); } catch(ex) { }
+        func(error.responseText,btnObj);
+      }
+      });
+}
+
+var showPreview = (input,imgId='')=>{
+  if(imgId==''){
+    imgId = $(input).attr('name')+'_preview';
+  }
+  if (input.files && input.files[0]) {
+  var reader = new FileReader();
+  reader.onload = function (e) {
+    $('#'+imgId).attr('src', e.target.result);
+    $('#'+imgId).show();
+  }
+  reader.readAsDataURL(input.files[0]);
+    return input.files[0].name;
+  }
+  else
+  {
+    $('#'+imgId).attr('src', '');
+    $('#'+imgId).hide();
+  }
+}
+var showPreviewmultiple = (input,divId='')=>{
+  if(divId==''){
+    divId = $(input).attr('id')+'_multipreview';
+  }
+  var placeToInsertImagePreview = $('#'+divId)
+  $('#'+divId).find('.runtimemultiadded').remove();
+  if (input.files) {
+      var filesAmount = input.files.length;
+      for (i = 0; i < filesAmount; i++) {
+          var reader = new FileReader();
+          reader.onload = function(event) {
+              $(placeToInsertImagePreview).append(`<div class="col-md-2 d-inline-block no-padding-left runtimemultiadded"><img src="${event.target.result}" class="img-responsive" /></div>`)
+              //$($.parseHTML('<img>')).attr('class','img-responsive runtimemultiadded').attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+          }
+          reader.readAsDataURL(input.files[i]);
+      }
+  }
+}
+var CopyText = (text)=>{
+  var _fk = document.createElement('input');
+  var _body = document.querySelector('body');
+  _fk.value = text;
+  _body.appendChild(_fk);
+  _fk.select();
+  document.execCommand("copy");
+  notify('2','Text Copied');
+  _fk.remove();
+}
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+var ReloadPage = ()=>{
+  location.reload();
+}
+(function() {
+    recallajax();
+})();
